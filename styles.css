@@ -1,0 +1,188 @@
+:root {
+    --br-color: #4ACAD9; /*Bright Color*/
+    --xl-color: #549bb7; /*Extra Light Color*/
+    --lt-color: #2180A6; /*Light Color*/
+    --md-color: #1C618C; /*Medium Color*/
+    --dk-color: #114559; /*Dark Color*/
+    --xd-color: #0A2A3E; /*Extra Dark Color*/
+}
+
+* {
+    cursor: default;
+}
+
+body {
+    color: white;
+    margin:0px;
+    font-family: Roboto, Helvetica Neue, Source Sans Pro, sans-serif; /* Consolas, Segoe UI, Tahoma, Verdana */
+    font-size: 18px;
+}
+
+table, thead, tbody, tfoot, tr, th, td {
+    padding: 18px 36px;
+    border-collapse: collapse;
+}
+
+table {
+    /* border: thin solid var(--dk-color, #555555); */
+    /* background: linear-gradient(to right, #12b5a0, #05abaf); */
+    /* background: linear-gradient(to right, #549bb7, #2180A6); blue: light */
+    /* background: linear-gradient(to right, #549bb7, #1C618C); blue: light -> med */
+    /* background: linear-gradient(to right, #2180A6, #1C618C); blue: med */
+    /* background: linear-gradient(to right, #2180A6, #0A2A3E); blue: med -> dark (high contrast) */
+    /* background: linear-gradient(to right, #1C618C, #0A2A3E); blue: med -> dark (low contrast) */
+    /* background: linear-gradient(to right, #114559, #0A2A3E); blue: dark */
+    border-bottom: thin solid white;
+}
+
+thead {
+    /* background-color: var(--lt-color, #F3F3F3); */
+}
+
+th {
+    text-align: left;
+    /* border-bottom: thin solid var(--dk-color, #555555); */
+    border-bottom: thin solid #EEEEEE;
+}
+
+tbody {
+}
+
+td {
+    /* border-top: thin solid var(--md-color, #E5E5E5); */
+    border-top: thin solid #009396;
+}
+
+td:hover {
+    background-color: #009396;
+}
+
+tr {
+    padding-right: 64px;
+}
+
+.table-container {
+    display: inline-block;
+    background: linear-gradient(to right, #12b5a0, #05abaf);
+    margin: 24px;
+    border-radius: 8px;
+}
+
+.table-controls {
+    height: 40px;
+    margin: 40px 40px;
+    text-align: right;
+}
+
+.table-controls-search {
+    float: right;
+    width: 160px;
+    margin-right: 32px;
+}
+
+.table-controls-search-input {
+    float: right;
+    width: 120px;
+    height: 20px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 24px;
+}
+
+.table-controls-search-input:hover {
+    cursor: text;
+}
+
+.table-controls-search-input:focus {
+    outline: none;
+}
+
+.table-controls-color {
+    float: right;
+    display: inline-block;
+    width: 48px;
+    height: 37px;
+    background-color: transparent;
+    margin-right: 16px;
+    border: 2px solid white;
+    border-radius: 12px;
+}
+
+.table-controls-color:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+.table-controls-layout {
+    float: right;
+    display: inline-block;
+    width: 48px;
+    height: 37px;
+    background-color: transparent;
+    margin-right: 32px;
+    border: 2px solid white;
+    border-radius: 12px;
+}
+
+.table-controls-layout:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+.table-controls-edit {
+    float: right;
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+    margin-right: 32px;
+    border: none;
+}
+
+.table-controls-edit:hover {
+    cursor: pointer;
+}
+
+.table-controls-edit:focus {
+    outline: none;
+}
+
+.table-controls-delete {
+    float: right;
+    width: 20px;
+    height: 20px;
+    background-color: #FF3366;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 50%;
+}
+
+.table-controls-delete:hover {
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
+    cursor: pointer;
+}
+
+.table-controls-delete:focus {
+    outline: none;
+}
+
+.selection {
+    
+}
+
+.selection-row {
+    
+}
+
+.selection-column {
+    
+}
+
+.selection-equivalent {
+    
+}
