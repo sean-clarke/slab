@@ -25,18 +25,24 @@ function displayColors(o) {
   o.appendChild(color_selection);
 }
 
-function displayLayouts(o) {
-  var layout_selection = document.createElement('div');
-  layout_selection.setAttribute('class', 'table-controls-layout-tab');
-  o.appendChild(layout_selection);
-}
-
 function hideColors() {
   var color_selections = document.getElementsByClassName('table-controls-color-tab');
   for (var c_select in color_selections) {
     color_selections[c_select].parentNode.removeChild(color_selections[c_select]);
     return
   }
+}
+
+function changeColors(c_pal) {
+    document.documentElement.style.setProperty('--table-lt-color', c_pal[0]);
+    document.documentElement.style.setProperty('--table-dk-color', c_pal[1]);
+    document.documentElement.style.setProperty('--table-aux-color', c_pal[2]);
+}
+
+function displayLayouts(o) {
+  var layout_selection = document.createElement('div');
+  layout_selection.setAttribute('class', 'table-controls-layout-tab');
+  o.appendChild(layout_selection);
 }
 
 function hideLayouts() {
@@ -63,7 +69,7 @@ function addTable(t, name) {
     t_top_search_input.setAttribute('class', 'table-controls-search-input');
     t_top_search_input.setAttribute('type', 'text');
     t_top_search_input.setAttribute('autocomplete', 'off');
-    t_top_search_input.setAttribute('placeholder', 'Search');
+    t_top_search_input.setAttribute('placeholder', 'Search...');
     t_top_search.appendChild(t_top_search_input)
     var t_top_color = document.createElement('div');
     t_top_color.setAttribute('id', name.concat('-color'));
@@ -131,8 +137,13 @@ function addTable(t, name) {
     tables.appendChild(t_container);
 }
 
-
-
+var cpal_sunset = ['#FF5540', '#EE3340', '#FF893F'];
+var cpal_berry = ['#CC2288', '#441188', '#BB22BB'];
+var cpal_sky = ['#3399DD', '#1177DD', '#0060C0'];
+var cpal_ocean = ['#10609A', '#005070', '#0090CC'];
+var cpal_sea = ['#00BBA0', '#00ABC0', '#009BA0'];
+var cpal_jungle = ['#77BB77', '#448844', '#007700'];
+var cpal_night = ['#445566', '#223344', '#5580AD'];
 
 var t1 = new Table();
 t1.add_col('first');
