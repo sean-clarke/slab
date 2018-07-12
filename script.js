@@ -1,7 +1,7 @@
 function Table() {
   this.rows = [{}];
   this.cols = 0;
-  
+
   this.add_col = function (hdr) {
     this.rows[0][this.cols] = hdr;
     for (var row in this.rows.slice(1)) {
@@ -18,6 +18,121 @@ function Table() {
     this.rows.push(nr)
   }
 }
+
+function displayColors(o) {
+  var color_selection = document.createElement('div');
+  color_selection.setAttribute('class', 'table-controls-color-tab');
+  o.appendChild(color_selection);
+}
+
+function displayLayouts(o) {
+  var layout_selection = document.createElement('div');
+  layout_selection.setAttribute('class', 'table-controls-layout-tab');
+  o.appendChild(layout_selection);
+}
+
+function hideColors() {
+  var color_selections = document.getElementsByClassName('table-controls-color-tab');
+  for (var c_select in color_selections) {
+    color_selections[c_select].parentNode.removeChild(color_selections[c_select]);
+    return
+  }
+}
+
+function hideLayouts() {
+  var layout_selections = document.getElementsByClassName('table-controls-layout-tab');
+  for (var l_select in layout_selections) {
+    layout_selections[l_select].parentNode.removeChild(layout_selections[l_select]);
+    return
+  }
+}
+
+function addTable(t, name) {
+    var tables = document.getElementById('tables-container');
+
+    var t_top = document.createElement('div');
+    t_top.setAttribute("id", name.concat('-controls'));
+    t_top.setAttribute("class", 'table-controls');
+    var t_top_search = document.createElement('form');
+    t_top_search.setAttribute("id", name.concat('-search'));
+    t_top_search.setAttribute('class', 'table-controls-search');
+    t_top_search.setAttribute('action', 'javascript:void(0);');
+    t_top_search.setAttribute('onsubmit', 'addSelection();');
+    var t_top_search_input = document.createElement('input');
+    t_top_search_input.setAttribute('id', name.concat('-search-input'));
+    t_top_search_input.setAttribute('class', 'table-controls-search-input');
+    t_top_search_input.setAttribute('type', 'text');
+    t_top_search_input.setAttribute('autocomplete', 'off');
+    t_top_search_input.setAttribute('placeholder', 'Search');
+    t_top_search.appendChild(t_top_search_input)
+    var t_top_color = document.createElement('div');
+    t_top_color.setAttribute('id', name.concat('-color'));
+    t_top_color.setAttribute('class', 'table-controls-color');
+    t_top_color.setAttribute('onmouseenter', 'displayColors(this);');
+    t_top_color.setAttribute('onmouseleave', 'hideColors();');
+    var t_top_layout = document.createElement('div');
+    t_top_layout.setAttribute('id', name.concat('-layout'));
+    t_top_layout.setAttribute('class', 'table-controls-layout');
+    t_top_layout.setAttribute('onmouseenter', 'displayLayouts(this);');
+    t_top_layout.setAttribute('onmouseleave', 'hideLayouts();');
+    var t_top_edit = document.createElement('button');
+    t_top_edit.setAttribute('id', name.concat('-edit'));
+    t_top_edit.setAttribute('class', 'table-controls-edit');
+    var t_top_delete = document.createElement('button');
+    t_top_delete.setAttribute('id', name.concat('-delete'));
+    t_top_delete.setAttribute('class', 'table-controls-delete');
+    t_top.appendChild(t_top_delete);
+    t_top.appendChild(t_top_edit);
+    t_top.appendChild(t_top_layout);
+    t_top.appendChild(t_top_color);
+    t_top.appendChild(t_top_search);
+
+    var t_container = document.createElement('div');
+    t_container.setAttribute('id', name.concat('-container'));
+    t_container.setAttribute('class', 'table-container');
+    var t_html = document.createElement('table');
+    t_html.setAttribute('id', name);
+    var thead_html = document.createElement('thead');
+    var tr_html = document.createElement('tr');
+    for (var hdr in t.rows[0]) {
+        var th_html = document.createElement('th');
+        th_html.innerHTML = t.rows[0][hdr];
+        tr_html.appendChild(th_html);
+    }
+    thead_html.appendChild(tr_html);
+    t_html.appendChild(thead_html);
+    var tbody_html = document.createElement('tbody');
+    for (var row in t.rows.slice(1)) {
+        row++;
+        var tr_html = document.createElement('tr');
+        for (var cell in t.rows[row]) {
+            var td_html = document.createElement('td');
+            td_html.innerHTML = t.rows[row][cell];
+            tr_html.appendChild(td_html);
+        }
+        tbody_html.appendChild(tr_html);
+    }
+    t_html.appendChild(tbody_html);
+
+    var t_bottom = document.createElement('div');
+    t_bottom.setAttribute('id', name.concat('-nav'));
+    t_bottom.setAttribute('class', 'table-nav');
+    var t_bottom_rpp = document.createElement('div');
+    t_bottom_rpp.setAttribute('class', 'table-rpp');
+    var t_page_select = document.createElement('div');
+    t_page_select.setAttribute('class', 'table-page_select');
+    t_bottom.appendChild(t_bottom_rpp);
+    t_bottom.appendChild(t_page_select);
+
+    t_container.appendChild(t_top);
+    t_container.appendChild(t_html);
+    t_container.appendChild(t_bottom);
+
+    tables.appendChild(t_container);
+}
+
+
+
 
 var t1 = new Table();
 t1.add_col('first');
@@ -47,76 +162,5 @@ t2.add_row([2002, 'winter', 'United States', 'Salt Lake City', 'North America'])
 t2.add_row([2000, 'summer', 'Australia', 'Sydney', 'Oceania']);
 t2.add_row([1998, 'winter', 'Japan', 'Nagano', 'Asia']);
 t2.add_row([1996, 'summer', 'United States', 'Atlanta', 'North America']);
-
-var t3 = new Table();
-
-function addTable(t, name) {
-    var tables = document.getElementById('tables-container');
-    
-    var t_top = document.createElement('div');
-    t_top.setAttribute("id", name.concat('-controls'));
-    t_top.setAttribute("class", 'table-controls');
-    var t_top_search = document.createElement('form');
-    t_top_search.setAttribute("id", name.concat('-search'));
-    t_top_search.setAttribute('class', 'table-controls-search');
-    var t_top_search_input = document.createElement('input');
-    t_top_search_input.setAttribute('id', name.concat('-search-input'));
-    t_top_search_input.setAttribute('class', 'table-controls-search-input');
-    t_top_search_input.setAttribute('type', 'text');
-    t_top_search.appendChild(t_top_search_input)
-    var t_top_color = document.createElement('div');
-    t_top_color.setAttribute('id', name.concat('-color'));
-    t_top_color.setAttribute('class', 'table-controls-color');
-    var t_top_layout = document.createElement('div');
-    t_top_layout.setAttribute('id', name.concat('-layout'));
-    t_top_layout.setAttribute('class', 'table-controls-layout');
-    var t_top_edit = document.createElement('button');
-    t_top_edit.setAttribute('id', name.concat('-edit'));
-    t_top_edit.setAttribute('class', 'table-controls-edit');
-    var t_top_delete = document.createElement('button');
-    t_top_delete.setAttribute('id', name.concat('-delete'));
-    t_top_delete.setAttribute('class', 'table-controls-delete');
-    t_top.appendChild(t_top_delete);
-    t_top.appendChild(t_top_edit);
-    t_top.appendChild(t_top_layout);
-    t_top.appendChild(t_top_color);
-    t_top.appendChild(t_top_search);
-    
-    var t_container = document.createElement('div');
-    t_container.setAttribute('id', name.concat('-container'));
-    t_container.setAttribute('class', 'table-container');
-    var t_html = document.createElement('table');
-    t_html.setAttribute('id', name);
-    var thead_html = document.createElement('thead');
-    var tr_html = document.createElement('tr');
-    for (var hdr in t.rows[0]) {
-        var th_html = document.createElement('th');
-        th_html.innerHTML = t.rows[0][hdr];
-        tr_html.appendChild(th_html);
-    }
-    thead_html.appendChild(tr_html);
-    t_html.appendChild(thead_html);
-    var tbody_html = document.createElement('tbody');
-    for (var row in t.rows.slice(1)) {
-        row++;
-        var tr_html = document.createElement('tr');
-        for (var cell in t.rows[row]) {
-            var td_html = document.createElement('td');
-            td_html.innerHTML = t.rows[row][cell];
-            tr_html.appendChild(td_html);
-        }
-        tbody_html.appendChild(tr_html);
-    }
-    t_html.appendChild(tbody_html);
-    
-    var t_bottom = document.createElement('div');
-    t_bottom.setAttribute('id', name.concat('-nav'));
-    
-    t_container.appendChild(t_top);
-    t_container.appendChild(t_html);
-    t_container.appendChild(t_bottom);
-    
-    tables.appendChild(t_container);
-}
 
 addTable(t2, 't2');
