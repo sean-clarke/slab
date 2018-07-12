@@ -76,17 +76,19 @@ tr {
 
 .table-controls-search {
     float: right;
-    width: 160px;
+    width: 240px;
     margin-right: 32px;
 }
 
 .table-controls-search-input {
     float: right;
-    width: 120px;
+    width: 200px;
     height: 20px;
+    color: grey;
     padding: 10px 20px;
     border: none;
     border-radius: 24px;
+    font-size: 14px;
 }
 
 .table-controls-search-input:hover {
@@ -101,32 +103,88 @@ tr {
     float: right;
     display: inline-block;
     width: 48px;
-    height: 37px;
+    height: 40px;
     background-color: transparent;
     margin-right: 16px;
+    box-sizing: border-box;
     border: 2px solid white;
     border-radius: 12px;
+    transition: linear 0.1s;
 }
 
 .table-controls-color:hover {
-    background-color: white;
+    height: 56px;
+    background-color: transparent;
+    border: 2px solid white;
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
     cursor: pointer;
+}
+
+.table-controls-color:focus {
+  outline: none;
+  background-color: white;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.table-controls-color-tab {
+  position: relative;
+  top: 54px;
+  left: -94px;
+  width: 136px;
+  height: 200px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 8px;
+  border-top-right-radius: 0px;
+}
+
+.table-controls-color-tab:hover {
+  opacity: 1;
 }
 
 .table-controls-layout {
     float: right;
     display: inline-block;
     width: 48px;
-    height: 37px;
+    height: 40px;
     background-color: transparent;
     margin-right: 32px;
+    box-sizing: border-box;
     border: 2px solid white;
     border-radius: 12px;
+    transition: linear 0.1s;
 }
 
 .table-controls-layout:hover {
-    background-color: white;
-    cursor: pointer;
+  height: 56px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-bottom: none;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  cursor: pointer;
+}
+
+.table-controls-layout:focus {
+  outline: none;
+  background-color: white;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.table-controls-layout-tab {
+  position: relative;
+  top: 54px;
+  left: -2px;
+  width: 136px;
+  height: 200px;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 8px;
+  border-top-left-radius: 0px;
 }
 
 .table-controls-edit {
@@ -152,19 +210,23 @@ tr {
     height: 20px;
     background-color: #FF3366;
     margin-top: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 3px solid transparent;
     border-radius: 50%;
+    transition: border 1s, width 0.25s, height 0.25s, margin 0.25s, background-color 0.5s;
 }
 
 .table-controls-delete:hover {
-    width: 30px;
-    height: 30px;
-    margin-top: 5px;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    margin-top: 0px;
     margin-left: 0px;
     margin-right: 0px;
+    border: 3px solid #FF3366;
     cursor: pointer;
+    transition: border 1s, width 0.25s, height 0.25s, margin 0.25s;
 }
 
 .table-controls-delete:focus {
@@ -172,17 +234,17 @@ tr {
 }
 
 .selection {
-    
+
 }
 
 .selection-row {
-    
+
 }
 
 .selection-column {
-    
+
 }
 
 .selection-equivalent {
-    
+
 }
