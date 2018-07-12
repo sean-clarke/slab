@@ -53,6 +53,21 @@ function hideLayouts() {
   }
 }
 
+function alternatingRowsLayout() {
+    var rows = document.getElementsByTagName('tr');
+    var skip = false;
+    for (var row in rows) {
+        skip = !skip;
+        if (skip) {
+            continue;
+        }
+        var cells = rows[row].getElementsByTagName('td');
+        for (var cell in cells) {
+            console.log(cell);
+        }
+    }
+}
+
 function addTable(t, name) {
     var tables = document.getElementById('tables-container');
 
