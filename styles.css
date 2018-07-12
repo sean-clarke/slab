@@ -1,10 +1,8 @@
 :root {
-    --br-color: #4ACAD9; /*Bright Color*/
-    --xl-color: #549bb7; /*Extra Light Color*/
-    --lt-color: #2180A6; /*Light Color*/
-    --md-color: #1C618C; /*Medium Color*/
-    --dk-color: #114559; /*Dark Color*/
-    --xd-color: #0A2A3E; /*Extra Dark Color*/
+    --table-lt-color: #00BBA0;
+    --table-dk-color: #00ABC0;
+    --table-aux-color: #009BA0;
+    --table-sec-color: #008AB0;
 }
 
 * {
@@ -24,37 +22,34 @@ table, thead, tbody, tfoot, tr, th, td {
 }
 
 table {
-    /* border: thin solid var(--dk-color, #555555); */
-    /* background: linear-gradient(to right, #12b5a0, #05abaf); */
-    /* background: linear-gradient(to right, #549bb7, #2180A6); blue: light */
-    /* background: linear-gradient(to right, #549bb7, #1C618C); blue: light -> med */
-    /* background: linear-gradient(to right, #2180A6, #1C618C); blue: med */
-    /* background: linear-gradient(to right, #2180A6, #0A2A3E); blue: med -> dark (high contrast) */
-    /* background: linear-gradient(to right, #1C618C, #0A2A3E); blue: med -> dark (low contrast) */
-    /* background: linear-gradient(to right, #114559, #0A2A3E); blue: dark */
     border-bottom: thin solid white;
 }
 
 thead {
-    /* background-color: var(--lt-color, #F3F3F3); */
 }
 
 th {
     text-align: left;
-    /* border-bottom: thin solid var(--dk-color, #555555); */
     border-bottom: thin solid #EEEEEE;
+}
+
+th:hover {
+    background: var(--table-aux-color);
+}
+
+th:active {
+    background: var(--table-sec-color);
 }
 
 tbody {
 }
 
 td {
-    /* border-top: thin solid var(--md-color, #E5E5E5); */
-    border-top: thin solid #009396;
+    border-top: thin solid var(--table-aux-color);
 }
 
 td:hover {
-    background-color: #009396;
+    background-color: var(--table-aux-color);
 }
 
 tr {
@@ -63,7 +58,7 @@ tr {
 
 .table-container {
     display: inline-block;
-    background: linear-gradient(to right, #12b5a0, #05abaf);
+    background: linear-gradient(to right, var(--table-lt-color), var(--table-dk-color));
     margin: 24px;
     border-radius: 8px;
 }
@@ -76,27 +71,33 @@ tr {
 
 .table-controls-search {
     float: right;
-    width: 240px;
     margin-right: 32px;
 }
 
 .table-controls-search-input {
     float: right;
-    width: 200px;
-    height: 20px;
+    width: 100px;
+    height: 40px;
     color: grey;
     padding: 10px 20px;
     border: none;
     border-radius: 24px;
+    box-sizing: border-box;
     font-size: 14px;
+    opacity: 0.95;
+    transition: width 0.5s;
 }
 
 .table-controls-search-input:hover {
+    opacity: 0.95;
     cursor: text;
+    width: 220px;
 }
 
 .table-controls-search-input:focus {
+    opacity: 1;
     outline: none;
+    width: 220px;
 }
 
 .table-controls-color {
@@ -105,6 +106,9 @@ tr {
     width: 48px;
     height: 40px;
     background-color: transparent;
+    background-image: url('colorpallete.svg');
+    background-position: center;
+    background-size: contain;
     margin-right: 16px;
     box-sizing: border-box;
     border: 2px solid white;
@@ -114,7 +118,8 @@ tr {
 
 .table-controls-color:hover {
     height: 56px;
-    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.4);
+    background-image: none;
     border: 2px solid white;
     border-bottom: none;
     border-bottom-left-radius: 0px;
@@ -123,26 +128,23 @@ tr {
 }
 
 .table-controls-color:focus {
-  outline: none;
-  background-color: white;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
+    outline: none;
 }
 
 .table-controls-color-tab {
-  position: relative;
-  top: 54px;
-  left: -94px;
-  width: 136px;
-  height: 200px;
-  background-color: transparent;
-  border: 2px solid white;
-  border-radius: 8px;
-  border-top-right-radius: 0px;
+    position: relative;
+    top: 54px;
+    left: -94px;
+    width: 136px;
+    height: 200px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 2px solid white;
+    border-radius: 8px;
+    border-top-right-radius: 0px;
 }
 
 .table-controls-color-tab:hover {
-  opacity: 1;
+   background-color: rgba(255, 255, 255, 0.8);
 }
 
 .table-controls-layout {
@@ -151,6 +153,9 @@ tr {
     width: 48px;
     height: 40px;
     background-color: transparent;
+    background-image: url('layout.svg');
+    background-position: center;
+    background-size: contain;
     margin-right: 32px;
     box-sizing: border-box;
     border: 2px solid white;
@@ -160,7 +165,8 @@ tr {
 
 .table-controls-layout:hover {
   height: 56px;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.4);
+  background-image: none;
   border: 2px solid white;
   border-bottom: none;
   border-bottom-left-radius: 0px;
@@ -170,9 +176,6 @@ tr {
 
 .table-controls-layout:focus {
   outline: none;
-  background-color: white;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
 }
 
 .table-controls-layout-tab {
@@ -181,23 +184,41 @@ tr {
   left: -2px;
   width: 136px;
   height: 200px;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.4);
   border: 2px solid white;
-  border-radius: 8px;
+  border-radius: 12px;
   border-top-left-radius: 0px;
+}
+
+.table-controls-layout-tab:hover {
+   background-color: rgba(255, 255, 255, 0.8);
 }
 
 .table-controls-edit {
     float: right;
     width: 40px;
     height: 40px;
-    background-color: yellow;
+    background-color: transparent;
+    background-image: url('edit.svg');
+    background-position: center;
+    background-size: contain;
     margin-right: 32px;
-    border: none;
+    border: 2px solid white;
+    border-radius: 8px;
+    box-sizing: border-box;
 }
 
 .table-controls-edit:hover {
+    border: 4px solid white;
     cursor: pointer;
+}
+
+.table-controls-edit:active {
+    margin-top: 2px;
+    margin-right: 34px;
+    margin-left: 2px;
+    width: 36px;
+    height: 36px;
 }
 
 .table-controls-edit:focus {
@@ -206,13 +227,16 @@ tr {
 
 .table-controls-delete {
     float: right;
-    width: 20px;
-    height: 20px;
-    background-color: #FF3366;
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-    border: 3px solid transparent;
+    width: 24px;
+    height: 24px;
+    background-color: transparent;
+    background: url('delete.svg'), #FF3366;
+    background-position: center;
+    background-size: contain;
+    margin-top: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+    border: 2px solid white;
     border-radius: 50%;
     transition: border 1s, width 0.25s, height 0.25s, margin 0.25s, background-color 0.5s;
 }
@@ -220,13 +244,17 @@ tr {
 .table-controls-delete:hover {
     width: 40px;
     height: 40px;
-    background-color: transparent;
     margin-top: 0px;
     margin-left: 0px;
     margin-right: 0px;
-    border: 3px solid #FF3366;
+    border: 2px solid white;
     cursor: pointer;
-    transition: border 1s, width 0.25s, height 0.25s, margin 0.25s;
+    transition: border 0.25s, width 0.25s, height 0.25s, margin 0.25s;
+}
+
+.table-controls-delete:active {
+    border: 5px solid white;;
+    transition: 0s;
 }
 
 .table-controls-delete:focus {
