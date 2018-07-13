@@ -1,4 +1,5 @@
 :root {
+    --table-text-color: white;
     --table-lt-color: #1060A0;
     --table-dk-color: #005070;
     --table-aux-pri-color: #0090CC;
@@ -12,18 +13,19 @@
 }
 
 body {
-    color: white;
+    color: var(--table-text-color);
     margin:0px;
     font-family: Roboto, Helvetica Neue, Source Sans Pro, sans-serif; /* Consolas, Segoe UI, Tahoma, Verdana */
     font-size: 18px;
 }
 
-table, thead, tbody, tfoot, tr, th, td {
+table, thead, tbody, tfoot, th, td {
     padding: 18px 36px;
     border-collapse: collapse;
 }
 
 table {
+    min-width: 600px;
     border-bottom: thin solid #EEEEEE;
 }
 
@@ -35,27 +37,16 @@ th {
     border-bottom: thin solid #EEEEEE;
 }
 
-th:hover {
-    background: var(--table-aux-pri-color);
-}
-
-th:active {
-    background: var(--table-aux-sec-color);
-}
-
-tbody {
-}
-
 td {
     border-top: thin solid var(--table-aux-pri-color);
 }
 
-td:hover {
+tbody td:hover {
     background-color: var(--table-aux-pri-color);
 }
 
-tr {
-    padding-right: 64px;
+tbody td:active {
+    background: var(--table-aux-sec-color);
 }
 
 tfoot td {
@@ -64,9 +55,10 @@ tfoot td {
 
 .table-container {
     display: inline-block;
+    vertical-align: top;
     background: linear-gradient(to right, var(--table-lt-color), var(--table-dk-color));
     margin: 24px;
-    border-radius: 8px;
+    border-radius: 24px;
 }
 
 .table-controls {
@@ -115,10 +107,11 @@ tfoot td {
     background-image: url('colorpallete.svg');
     background-position: center;
     background-size: contain;
+    background-repeat: no-repeat;
     margin-right: 16px;
+    border: 2px solid var(--table-text-color);
+    border-radius: 24px;
     box-sizing: border-box;
-    border: 2px solid white;
-    border-radius: 12px;
     transition: linear 0.1s;
 }
 
@@ -126,7 +119,7 @@ tfoot td {
     height: 56px;
     background-color: rgba(255, 255, 255, 0.4);
     background-image: none;
-    border: 2px solid white;
+    border: 2px solid var(--table-text-color);
     border-bottom: none;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -138,19 +131,45 @@ tfoot td {
 }
 
 .table-controls-color-tab {
+    display: grid;
+    grid-template-columns: 64px 64px;
     position: relative;
     top: 54px;
     left: -94px;
-    width: 136px;
+    width: 128px;
     height: 200px;
     background-color: rgba(255, 255, 255, 0.4);
-    border: 2px solid white;
-    border-radius: 8px;
+    padding: 4px;
+    border: 2px solid var(--table-text-color);
+    border-radius: 24px;
     border-top-right-radius: 0px;
 }
 
 .table-controls-color-tab:hover {
    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.table-controls-color-button {
+    display: inline-block;
+    width: 54px;
+    height: 40px;
+    margin: 4px;
+    padding: 0px;
+    border: 3px solid #A5A5A5;
+    border-radius: 64px;
+    box-sizing: border-box;
+}
+
+.table-controls-color-button:hover {
+    width: 62px;
+    height: 48px;
+    margin: 0px;
+    border: 4px solid #909090;
+    transition: border 0.1s linear;
+}
+
+.table-controls-color-button:focus {
+    outline: none;
 }
 
 .table-controls-layout {
@@ -164,7 +183,7 @@ tfoot td {
     background-size: contain;
     margin-right: 32px;
     box-sizing: border-box;
-    border: 2px solid white;
+    border: 2px solid var(--table-text-color);
     border-radius: 12px;
     transition: linear 0.1s;
 }
@@ -173,7 +192,7 @@ tfoot td {
   height: 56px;
   background-color: rgba(255, 255, 255, 0.4);
   background-image: none;
-  border: 2px solid white;
+  border: 2px solid var(--table-text-color);
   border-bottom: none;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
@@ -191,7 +210,7 @@ tfoot td {
   width: 136px;
   height: 200px;
   background-color: rgba(255, 255, 255, 0.4);
-  border: 2px solid white;
+  border: 2px solid var(--table-text-color);
   border-radius: 12px;
   border-top-left-radius: 0px;
 }
@@ -209,22 +228,22 @@ tfoot td {
     background-position: center;
     background-size: contain;
     margin-right: 32px;
-    border: 2px solid white;
+    border: 2px solid var(--table-text-color);
     border-radius: 8px;
     box-sizing: border-box;
 }
 
 .table-controls-edit:hover {
-    border: 4px solid white;
+    border: 4px solid var(--table-text-color);
     cursor: pointer;
 }
 
 .table-controls-edit:active {
+    width: 36px;
+    height: 36px;
     margin-top: 2px;
     margin-right: 34px;
     margin-left: 2px;
-    width: 36px;
-    height: 36px;
 }
 
 .table-controls-edit:focus {
@@ -242,7 +261,7 @@ tfoot td {
     margin-top: 8px;
     margin-left: 8px;
     margin-right: 8px;
-    border: 2px solid white;
+    border: 2px solid var(--table-text-color);
     border-radius: 50%;
     transition: border 1s, width 0.25s, height 0.25s, margin 0.25s, background-color 0.5s;
 }
@@ -253,18 +272,96 @@ tfoot td {
     margin-top: 0px;
     margin-left: 0px;
     margin-right: 0px;
-    border: 2px solid white;
+    border: 2px solid var(--table-text-color);
     cursor: pointer;
     transition: border 0.25s, width 0.25s, height 0.25s, margin 0.25s;
 }
 
 .table-controls-delete:active {
-    border: 5px solid white;;
+    border: 5px solid var(--table-text-color);;
     transition: 0s;
 }
 
 .table-controls-delete:focus {
     outline: none;
+}
+
+.table-th:hover {
+    background-image: url('sort.svg');
+    background-position: 100% 50%;
+    background-size: 30% 30%;
+    background-repeat: no-repeat;
+    background-color: var(--table-aux-pri-color);
+}
+
+.table-th:active {
+    background-color: var(--table-aux-sec-color);
+}
+
+.table-new-column-button {
+    width: 24px;
+    height: 24px;
+    background: url('add.svg');
+    background-position: center;
+    background-size: contain;
+    margin-top: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
+    border: none;
+    box-sizing: border-box;
+    border-radius: 18px;
+    transition: border 1s, width 0.25s, height 0.25s, margin 0.25s, background-color 0.5s;
+}
+
+.table-new-column-button:hover {
+    -webkit-animation: spin 1s linear infinite;
+}
+
+.table-new-column-button:focus {
+    outline: none;
+}
+
+.table-row-actions {
+    padding: 0px;
+    text-align: center;
+}
+
+.table-row-actions-button {
+    width: 24px;
+    height: 24px;
+    margin-top: 12px;
+    margin-bottom: 10px;
+    padding: 0px;
+    border: none;
+    background: url('remove.svg');
+    background-size: contain;
+    background-position: center;
+    transition: 0.1s linear;
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(180deg);}
+}
+
+.table-row-actions-button:hover {
+    -webkit-animation: spin 0.25s linear 1;
+    width: 32px;
+    height: 32px;
+    margin-top: 8px;
+    margin-bottom: 6px;
+}
+
+.table-row-actions-button:focus {
+    outline: none;
+}
+
+.table-row-actions-button:active {
+    margin-top: 12px;
+    margin-bottom: 10px;
+    width: 24px;
+    height: 24px;
+    transition-duration: 0s;
 }
 
 .table-nav {
