@@ -1,8 +1,10 @@
 :root {
-    --table-lt-color: #00BBA0;
-    --table-dk-color: #00ABC0;
-    --table-aux-color: #009BA0;
-    --table-sec-color: #008AB0;
+    --table-lt-color: #1060A0;
+    --table-dk-color: #005070;
+    --table-aux-pri-color: #0090CC;
+    --table-aux-sec-color: #00A0E0;
+    --table-sec-lt-color:#1090C0;
+    --table-sec-dk-color:#007090;
 }
 
 * {
@@ -22,7 +24,7 @@ table, thead, tbody, tfoot, tr, th, td {
 }
 
 table {
-    border-bottom: thin solid white;
+    border-bottom: thin solid #EEEEEE;
 }
 
 thead {
@@ -34,26 +36,30 @@ th {
 }
 
 th:hover {
-    background: var(--table-aux-color);
+    background: var(--table-aux-pri-color);
 }
 
 th:active {
-    background: var(--table-sec-color);
+    background: var(--table-aux-sec-color);
 }
 
 tbody {
 }
 
 td {
-    border-top: thin solid var(--table-aux-color);
+    border-top: thin solid var(--table-aux-pri-color);
 }
 
 td:hover {
-    background-color: var(--table-aux-color);
+    background-color: var(--table-aux-pri-color);
 }
 
 tr {
     padding-right: 64px;
+}
+
+tfoot td {
+    height: 20px;
 }
 
 .table-container {
@@ -259,6 +265,10 @@ tr {
 
 .table-controls-delete:focus {
     outline: none;
+}
+
+.table-nav {
+    height: 100px;
 }
 
 .selection {
