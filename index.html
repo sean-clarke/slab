@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link href="https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="styles.css">
-  </head>
-  <body>
-    <div id="tables-container">
-    </div>
-    <script src="script.js"></script>
-  </body>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+     </head>
+     <body>
+        <div id="app-header">
+            <button id="new-table-button" onclick=newTablePopup();></button>
+            <div id="app-title">
+                Sean's Datatable Manager
+            </div>
+        </div>
+        <div id="app-buffer"></div>
+        <div id="tables-container"></div>
+        <div id="popups-container"></div>
+        <script src="script.js"></script>
+    </body>
 </html>
