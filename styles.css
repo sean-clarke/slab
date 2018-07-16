@@ -53,6 +53,58 @@ tfoot td {
     height: 20px;
 }
 
+#app-header {
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to right, #333333, #232323);
+    z-index: 1;
+}
+
+#new-table-button {
+    position: absolute;
+    display: inline;
+    width: 50px;
+    height: 50px;
+    color: white;
+    background: url('add.svg');
+    background-position: center;
+    background-size: contain;
+    background-color: transparent;
+    margin-top: 25px;
+    margin-left: 50px;
+    border: 2px solid white;
+    border-radius: 32px;
+    box-sizing: border-box;
+}
+
+#new-table-button:hover {
+    border: 3px solid white;
+}
+
+#new-table-button:active {
+    border: 4px solid white;
+}
+
+#new-table-button:focus {
+    outline: none;
+}
+
+#app-title {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    color: white;
+    margin-top: 48px;
+    font-size: 36px;
+    line-height: 0px;
+    text-align: center;
+}
+
+#app-buffer {
+    height: 100px;
+}
+
 .table-container {
     display: inline-block;
     vertical-align: top;
@@ -189,18 +241,18 @@ tfoot td {
 }
 
 .table-controls-layout:hover {
-  height: 56px;
-  background-color: rgba(255, 255, 255, 0.4);
-  background-image: none;
-  border: 2px solid var(--table-text-color);
-  border-bottom: none;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-  cursor: pointer;
+    height: 56px;
+    background-color: rgba(255, 255, 255, 0.4);
+    background-image: none;
+    border: 2px solid var(--table-text-color);
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    cursor: pointer;
 }
 
 .table-controls-layout:focus {
-  outline: none;
+    outline: none;
 }
 
 .table-controls-layout-tab {
@@ -263,7 +315,7 @@ tfoot td {
     margin-right: 8px;
     border: 2px solid var(--table-text-color);
     border-radius: 50%;
-    transition: border 1s, width 0.25s, height 0.25s, margin 0.25s, background-color 0.5s;
+    transition: width 0.25s, height 0.25s, margin 0.25s, background-color 0.5s;
 }
 
 .table-controls-delete:hover {
@@ -272,13 +324,16 @@ tfoot td {
     margin-top: 0px;
     margin-left: 0px;
     margin-right: 0px;
-    border: 2px solid var(--table-text-color);
     cursor: pointer;
-    transition: border 0.25s, width 0.25s, height 0.25s, margin 0.25s;
+    transition: width 0.25s, height 0.25s, margin 0.25s;
 }
 
 .table-controls-delete:active {
-    border: 5px solid var(--table-text-color);;
+    width: 32px;
+    height: 32px;
+    margin-top: 4px;
+    margin-left: 4px;
+    margin-right: 4px;
     transition: 0s;
 }
 
@@ -304,17 +359,31 @@ tfoot td {
     background: url('add.svg');
     background-position: center;
     background-size: contain;
+    background-color: limegreen;
     margin-top: 8px;
-    margin-left: 8px;
     margin-right: 8px;
-    border: none;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    padding: 0px;
+    border: 2px solid white;
     box-sizing: border-box;
     border-radius: 18px;
-    transition: border 1s, width 0.25s, height 0.25s, margin 0.25s, background-color 0.5s;
 }
 
 .table-new-column-button:hover {
-    -webkit-animation: spin 1s linear infinite;
+    width: 32px;
+    height: 32px;
+    margin-top: 4px;
+    margin-left: 4px;
+    margin-bottom: 4px;
+    margin-right: 4px;
+    padding: 0px;
+}
+
+.table-new-column-button:active {
+    width: 28px;
+    height: 28px;
+    margin: 6px;
 }
 
 .table-new-column-button:focus {
@@ -382,4 +451,22 @@ tfoot td {
 
 .selection-equivalent {
 
+}
+
+#popups-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #454545;
+}
+
+.popup {
+    position: relative;
+    min-width: 600px;
+    height: 540px;
+    background-color: #EEEEEE;
+    margin: 160px 50% 160px 10%;
+    border-radius: 16px;
 }
