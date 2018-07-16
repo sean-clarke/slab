@@ -1,7 +1,10 @@
+tables = [];
+
 function Table(name) {
-    this.name = name;
+    this.name = name.replace(" ", "-").toLowerCase();
     this.rows = [{}];
     this.cols = 0;
+    tables.push(this);
     this.add_col = function (hdr, dflt='-') {
         this.rows[0][this.cols] = hdr;
         for (var row in this.rows.slice(1)) {
@@ -11,7 +14,7 @@ function Table(name) {
         this.cols += 1;
     }
     this.add_row = function (v) {
-        nr = {};	
+        nr = {};
         for (var hdr in this.rows[0]) {
         nr[this.rows[0][hdr]] = v[hdr];
         }
@@ -20,9 +23,25 @@ function Table(name) {
     this.rmv_col = function () {
         // pass
     }
-    this.rmv_row = function () {
-        // pass
+    this.rmv_row = function (r) {
+        this.rows.splice(r, 1);
     }
+}
+
+function newTablePopup() {
+    var popups_container = document.getElementById('popups-container');
+    var popup = document.createElement('div');
+    popup.setAttribute('class', 'popup');
+    popups_container.appendChild(popup);
+    popups_container.style.display = 'block';
+}
+
+function deleteTablePopup() {
+    // pass
+}
+
+function removeRowPopup() {
+    // pass
 }
 
 function displayColors(o) {
@@ -157,51 +176,8 @@ function alternatingRowsLayout(name) {
     }
 }
 
-function addTable(t) {
+function buildTable(t) {
     name = t.name;
-    var tables = document.getElementById('tables-container');
-    // Create Table Top
-    var t_top = document.createElement('div');
-    t_top.setAttribute("id", name.concat('-controls'));
-    t_top.setAttribute("class", 'table-controls');
-    var t_top_search = document.createElement('form');
-    t_top_search.setAttribute("id", name.concat('-controls-search'));
-    t_top_search.setAttribute('class', 'table-controls-search');
-    t_top_search.setAttribute('action', 'javascript:void(0);');
-    t_top_search.setAttribute('onsubmit', 'addSelection();');
-    var t_top_search_input = document.createElement('input');
-    t_top_search_input.setAttribute('id', name.concat('-controls-search-input'));
-    t_top_search_input.setAttribute('class', 'table-controls-search-input');
-    t_top_search_input.setAttribute('type', 'text');
-    t_top_search_input.setAttribute('autocomplete', 'off');
-    t_top_search_input.setAttribute('placeholder', 'Search...');
-    t_top_search.appendChild(t_top_search_input);
-    var t_top_color = document.createElement('div');
-    t_top_color.setAttribute('id', name.concat('-controls-color'));
-    t_top_color.setAttribute('class', 'table-controls-color');
-    t_top_color.setAttribute('onmouseenter', 'displayColors(this);');
-    t_top_color.setAttribute('onmouseleave', 'hideColors();');
-    var t_top_layout = document.createElement('div');
-    t_top_layout.setAttribute('id', name.concat('-controls-layout'));
-    t_top_layout.setAttribute('class', 'table-controls-layout');
-    t_top_layout.setAttribute('onmouseenter', 'displayLayouts(this);');
-    t_top_layout.setAttribute('onmouseleave', 'hideLayouts();');
-    var t_top_edit = document.createElement('button');
-    t_top_edit.setAttribute('id', name.concat('-controls-edit'));
-    t_top_edit.setAttribute('class', 'table-controls-edit');
-    var t_top_delete = document.createElement('button');
-    t_top_delete.setAttribute('id', name.concat('-controls-delete'));
-    t_top_delete.setAttribute('class', 'table-controls-delete');
-    t_top_delete.setAttribute('onclick', 'removeTable(this.id.slice(0, -16));');
-    t_top.appendChild(t_top_delete);
-    t_top.appendChild(t_top_edit);
-    t_top.appendChild(t_top_layout);
-    t_top.appendChild(t_top_color);
-    t_top.appendChild(t_top_search);
-    // Create Table
-    var t_container = document.createElement('div');
-    t_container.setAttribute('id', name.concat('-container'));
-    t_container.setAttribute('class', 'table-container');
     var t_html = document.createElement('table');
     t_html.setAttribute('id', name);
     // Create Table Head
@@ -257,6 +233,55 @@ function addTable(t) {
         tbody_html.appendChild(tr_html);
     }
     t_html.appendChild(tbody_html);
+    return t_html;
+}
+
+function addTable(t) {
+    var tables = document.getElementById('tables-container');
+    // Create Table Container
+    name = t.name;
+    var t_container = document.createElement('div');
+    t_container.setAttribute('id', name.concat('-container'));
+    t_container.setAttribute('class', 'table-container');
+    // Create Table Top
+    var t_top = document.createElement('div');
+    t_top.setAttribute("id", name.concat('-controls'));
+    t_top.setAttribute("class", 'table-controls');
+    var t_top_search = document.createElement('form');
+    t_top_search.setAttribute("id", name.concat('-controls-search'));
+    t_top_search.setAttribute('class', 'table-controls-search');
+    t_top_search.setAttribute('action', 'javascript:void(0);');
+    t_top_search.setAttribute('onsubmit', 'addSelection();');
+    var t_top_search_input = document.createElement('input');
+    t_top_search_input.setAttribute('id', name.concat('-controls-search-input'));
+    t_top_search_input.setAttribute('class', 'table-controls-search-input');
+    t_top_search_input.setAttribute('type', 'text');
+    t_top_search_input.setAttribute('autocomplete', 'off');
+    t_top_search_input.setAttribute('placeholder', 'Search...');
+    t_top_search.appendChild(t_top_search_input);
+    var t_top_color = document.createElement('div');
+    t_top_color.setAttribute('id', name.concat('-controls-color'));
+    t_top_color.setAttribute('class', 'table-controls-color');
+    t_top_color.setAttribute('onmouseenter', 'displayColors(this);');
+    t_top_color.setAttribute('onmouseleave', 'hideColors();');
+    var t_top_layout = document.createElement('div');
+    t_top_layout.setAttribute('id', name.concat('-controls-layout'));
+    t_top_layout.setAttribute('class', 'table-controls-layout');
+    t_top_layout.setAttribute('onmouseenter', 'displayLayouts(this);');
+    t_top_layout.setAttribute('onmouseleave', 'hideLayouts();');
+    var t_top_edit = document.createElement('button');
+    t_top_edit.setAttribute('id', name.concat('-controls-edit'));
+    t_top_edit.setAttribute('class', 'table-controls-edit');
+    var t_top_delete = document.createElement('button');
+    t_top_delete.setAttribute('id', name.concat('-controls-delete'));
+    t_top_delete.setAttribute('class', 'table-controls-delete');
+    t_top_delete.setAttribute('onclick', 'removeTable(this.id.slice(0, -16));');
+    t_top.appendChild(t_top_delete);
+    t_top.appendChild(t_top_edit);
+    t_top.appendChild(t_top_layout);
+    t_top.appendChild(t_top_color);
+    t_top.appendChild(t_top_search);
+
     // Create Table Bottom
     var t_bottom = document.createElement('div');
     t_bottom.setAttribute('id', name.concat('-nav'));
@@ -269,18 +294,30 @@ function addTable(t) {
     t_page_select.setAttribute('id', name.concat('-page-select'));
     t_bottom.appendChild(t_bottom_rpp);
     t_bottom.appendChild(t_page_select);
-    
+
     t_container.appendChild(t_top);
-    t_container.appendChild(t_html);
+    t_container.appendChild(buildTable(t));
     t_container.appendChild(t_bottom);
 
     tables.appendChild(t_container);
 }
 
+function updateTable(name) {
+    var table_container = document.getElementById(name.concat('-container'));
+    var table = document.getElementById(name);
+    table_container.removeChild(table);
+    for (i = 0; i < tables.length; i++) {
+        if (tables[i].name == name) {
+            table_container.insertBefore(buildTable(tables[i]), table_container.children[1]);
+            return;
+        }
+    }
+}
+
 function removeTable(name) {
-    var tables = document.getElementById('tables-container');
-    var table = document.getElementById(name.concat('-container'));
-    tables.removeChild(table);
+    var tables_container = document.getElementById('tables-container');
+    var table_container = document.getElementById(name.concat('-container'));
+    tables_container.removeChild(table_container);
 }
 
 var ot = new Table('olympics-table');
