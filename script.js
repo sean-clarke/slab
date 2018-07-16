@@ -4,12 +4,15 @@ function Table(name) {
     this.name = name.replace(" ", "-").toLowerCase();
     this.rows = [{}];
     this.cols = 0;
+    this.filters = [];
     tables.push(this);
     this.add_col = function (hdr, dflt='-') {
+        if (hdr === undefined) {
+            hdr = 'C'.concat(this.cols.toString());
+        }
         this.rows[0][this.cols] = hdr;
-        for (var row in this.rows.slice(1)) {
-            row++;
-            this.rows[row][hdr] = dflt;
+        for (i = 1; i < this.rows.length; i++) {
+            this.rows[i][hdr] = dflt;
         }
         this.cols += 1;
     }
@@ -20,28 +23,86 @@ function Table(name) {
         }
         this.rows.push(nr)
     }
-    this.rmv_col = function () {
-        // pass
+    this.rmv_col = function (hdr) {
+        
+        var found = false;
+        for (key in this.rows[0]) {
+            if (found) {
+                this.rows[0][key - 1] = this.rows[0][key];
+                continue;
+            }
+            if (this.rows[0][key] == hdr) {
+                found = true;
+            }
+        }
+        if (found) {
+            this.cols -= 1;
+            delete this.rows[0][this.cols];
+            for (i = 1; i < this.rows.length; i++) {
+                delete this.rows[i][hdr];
+            }
+        }
     }
     this.rmv_row = function (r) {
         this.rows.splice(r, 1);
     }
+    this.sort = function (hdr) {
+        // pass
+    }
+    this.add_filter = function (filter_string) {
+        // pass
+    }
 }
 
 function newTablePopup() {
+    var new_table_button = document.getElementById('new-table-button');
     var popups_container = document.getElementById('popups-container');
     var popup = document.createElement('div');
-    popup.setAttribute('class', 'popup');
+    popup.setAttribute('id', 'nt-popup');
     popups_container.appendChild(popup);
+    new_table_button.style.display = 'none';
     popups_container.style.display = 'block';
 }
 
-function deleteTablePopup() {
+function downloadTablePopup() {
     // pass
 }
 
-function removeRowPopup() {
-    // pass
+function deleteTablePopup(name) {
+    var new_table_button = document.getElementById('new-table-button');
+    var popups_container = document.getElementById('popups-container');
+    var popup = document.createElement('div');
+    popup.setAttribute('id', 'dt-popup');
+    var popup_escape = document.createElement('button');
+    popup_escape.setAttribute('class', 'dt-popup-escape');
+    popup_escape.setAttribute('onclick', 'removePopup("dt");');
+    var popup_header = document.createElement('div');
+    popup_header.setAttribute('class', 'dt-popup-header');
+    tname = name.replace('-', ' ');
+    tname = tname.replace(/\w\S*/g, c => c.charAt(0).toUpperCase() + c.substr(1).toLowerCase());
+    popup_header.innerHTML = 'Delete '.concat(tname).concat('?');
+    var popup_body = document.createElement('div');
+    popup_body.setAttribute('class', 'dt-popup-body');
+    popup_body.innerHTML = 'Are you sure you want to delete this table? All data inside the table will be lost.';
+    var popup_options = document.createElement('div');
+    popup_options.setAttribute('class', 'dt-popup-options');
+    var popup_continue = document.createElement('button');
+    popup_continue.innerHTML = 'Proceed';
+    popup_continue.setAttribute('class', 'dt-popup-continue');
+    popup_continue.setAttribute('onclick', 'removeTable("'.concat(name).concat('");'));
+    var popup_cancel = document.createElement('button');
+    popup_cancel.setAttribute('class', 'dt-popup-cancel');
+    popup_cancel.innerHTML = 'Cancel';
+    popup_cancel.setAttribute('onclick', 'removePopup("dt");');
+    popup_options.appendChild(popup_continue);
+    popup_options.appendChild(popup_cancel);
+    popup.appendChild(popup_escape);
+    popup.appendChild(popup_header);
+    popup.appendChild(popup_body);
+    popup.appendChild(popup_options);
+    popups_container.appendChild(popup);
+    new_table_button.style.display = 'none';
+    popups_container.style.display = 'block';
 }
 
 function displayColors(o) {
@@ -81,11 +142,11 @@ function displayColors(o) {
     color_selection_berry.setAttribute('onclick', 'changeColors("berry");');
     color_selection_berry.style.background = 'linear-gradient(to right, #CC2288, #441188)';
     var color_selection_night = document.createElement('button');
-    color_selection_night.setAttribute('id', name.concat('-controls-color-button-night'));
     color_selection_night.setAttribute('class', 'table-controls-color-button');
     color_selection_night.setAttribute('onclick', 'changeColors("night");');
     color_selection_night.style.background = 'linear-gradient(to right, #445566, #223344)';
     var color_selection_marble = document.createElement('button');
+    color_selection_night.setAttribute('id', name.concat('-controls-color-button-night'));
     color_selection_marble.setAttribute('id', name.concat('-controls-color-button-marble'));
     color_selection_marble.setAttribute('class', 'table-controls-color-button');
     color_selection_marble.setAttribute('onclick', 'changeColors("marble");');
@@ -112,12 +173,12 @@ function hideColors() {
 function changeColors(str) {
     // set col palletes:    lt       dk      aux-pri    aux-sec    sec-lt     sec-dk
     var cpal_marble = ['#E9E9E9', '#D5D5D5', '#EFEFEF', 'white', '#D9D9D9', '#C5C5C5'];
-    var cpal_sunset = ['#FF5540', '#EE3340', '#FF893F', '#000000', '#FF7060', '#EE5050'];
-    var cpal_berry = ['#CC2288', '#441188', '#BB22BB', '#000000', '#CC4499', '#4433AA'];
-    var cpal_sky = ['#3399DD', '#1177DD', '#0060C0', '#000000', '#44AAFF', '#2288EE'];
+    var cpal_sunset = ['#FF5540', '#EE3340', '#F09030', '#F0A030', '#FF7060', '#EE5050'];
+    var cpal_berry = ['#BB2288', '#441188', '#CC20CC', '#DD30DD', '#CC4499', '#4433AA'];
+    var cpal_sky = ['#3399DD', '#1177DD', '#0575C5', '#0065C0', '#44AAFF', '#2288EE'];
     var cpal_ocean = ['#1060A0', '#005070', '#0090CC', '#00A0E0', '#1080C0', '#007090'];
-    var cpal_sea = ['#00BBA0', '#00ABC0', '#009BA0', '#000000', '#22D0BB', '#00BBEE'];
-    var cpal_jungle = ['#77BB77', '#448844', '#007700', '#000000', '#88CC88', '#509950'];
+    var cpal_sea = ['#00BBA0', '#00ABC0', '#009BA0', '#009090', '#22D0BB', '#00BBEE'];
+    var cpal_jungle = ['#66BB66', '#448844', '#228822', '#117711', '#88CC88', '#509950'];
     var cpal_night = ['#445566', '#223344', '#7090B0', '#80A0C0', '#607585', '#324354'];
     document.documentElement.style.setProperty('--table-text-color', 'white');
     switch(str) {
@@ -192,8 +253,9 @@ function buildTable(t) {
     }
     var th_html = document.createElement('th');
     var new_col_button_html = document.createElement('button');
-    new_col_button_html.setAttribute('id', name.concat('new-column-button'));
+    new_col_button_html.setAttribute('id', name.concat('-new-column-button'));
     new_col_button_html.setAttribute('class', 'table-new-column-button');
+    new_col_button_html.setAttribute('onclick', 'addColumn(this.id.slice(0, -18));')
     th_html.appendChild(new_col_button_html);
     tr_html.appendChild(th_html);
     thead_html.appendChild(tr_html);
@@ -201,13 +263,20 @@ function buildTable(t) {
     // Create Table Foot
     var tfoot_html = document.createElement('tfoot');
     var tr_html = document.createElement('tr');
-    for (i = 0; i < t.cols; i++) {
-        var td_html = document.createElement('td');
-        td_html.setAttribute('id', name.concat('-footer-td-').concat(i.toString()));
-        td_html.setAttribute('class', 'table-footer-td');
-        tr_html.appendChild(td_html);
-    }
+    //for (i = 0; i < t.cols; i++) {
+    //    var td_html = document.createElement('td');
+    //    td_html.setAttribute('id', name.concat('-footer-td-').concat(i.toString()));
+    //    td_html.setAttribute('class', 'table-footer-td');
+    //    tr_html.appendChild(td_html);
+    //}
     var td_html = document.createElement('td');
+    td_html.setAttribute('class', 'table-new-row-button-container');
+    td_html.setAttribute('colspan', t.cols + 1);
+    var t_nr_button = document.createElement('button');
+    t_nr_button.setAttribute('id', name.concat('-new-row-button'));
+    t_nr_button.setAttribute('class', 'table-new-row-button');
+    t_nr_button.innerHTML = 'Add New Row';
+    td_html.appendChild(t_nr_button);
     tr_html.appendChild(td_html);
     tfoot_html.appendChild(tr_html);
     t_html.appendChild(tfoot_html);
@@ -220,6 +289,7 @@ function buildTable(t) {
         }
         for (var cell in t.rows[i]) {
             var td_html = document.createElement('td');
+            td_html.setAttribute('class', 'table-data');
             td_html.innerHTML = t.rows[i][cell];
             tr_html.appendChild(td_html);
         }
@@ -228,6 +298,7 @@ function buildTable(t) {
         var tr_actions_button_html = document.createElement('button');
         tr_actions_button_html.setAttribute('id', name.concat('-row-').concat(i.toString()).concat('-actions-button'));
         tr_actions_button_html.setAttribute('class', 'table-row-actions-button');
+        tr_actions_button_html.setAttribute('onclick', 'removeRow(this.id.split("-row-")[0], '.concat(i).concat(');'));
         tr_actions_html.appendChild(tr_actions_button_html);
         tr_html.appendChild(tr_actions_html);
         tbody_html.appendChild(tr_html);
@@ -275,7 +346,7 @@ function addTable(t) {
     var t_top_delete = document.createElement('button');
     t_top_delete.setAttribute('id', name.concat('-controls-delete'));
     t_top_delete.setAttribute('class', 'table-controls-delete');
-    t_top_delete.setAttribute('onclick', 'removeTable(this.id.slice(0, -16));');
+    t_top_delete.setAttribute('onclick', 'deleteTablePopup(this.id.slice(0, -16));');
     t_top.appendChild(t_top_delete);
     t_top.appendChild(t_top_edit);
     t_top.appendChild(t_top_layout);
@@ -314,10 +385,40 @@ function updateTable(name) {
     }
 }
 
+function removePopup(type) {
+    var popups_container = document.getElementById('popups-container');
+    var popup = document.getElementById(type.concat('-popup'));
+    var new_table_button = document.getElementById('new-table-button');
+    popups_container.removeChild(popup);
+    popups_container.style.display = 'none';
+    new_table_button.style.display = 'block';
+}
+
 function removeTable(name) {
     var tables_container = document.getElementById('tables-container');
     var table_container = document.getElementById(name.concat('-container'));
     tables_container.removeChild(table_container);
+    removePopup('dt');
+}
+
+function addColumn(name) {
+    for (i = 0; i < tables.length; i++) {
+        if (tables[i].name == name) {
+            tables[i].add_col();
+            updateTable(name);
+            return;
+        }
+    }
+}
+
+function removeRow(name, row) {
+    for (i = 0; i < tables.length; i++) {
+        if (tables[i].name == name) {
+            tables[i].rmv_row(row);
+            updateTable(name);
+            return;
+        }
+    }
 }
 
 var ot = new Table('olympics-table');
