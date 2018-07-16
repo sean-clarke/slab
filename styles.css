@@ -41,11 +41,11 @@ td {
     border-top: thin solid var(--table-aux-pri-color);
 }
 
-tbody td:hover {
+.table-data:hover {
     background-color: var(--table-aux-pri-color);
 }
 
-tbody td:active {
+.table-data:active {
     background: var(--table-aux-sec-color);
 }
 
@@ -58,6 +58,7 @@ tfoot td {
     width: 100%;
     height: 100px;
     background: linear-gradient(to right, #333333, #232323);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.25);
     z-index: 1;
 }
 
@@ -111,6 +112,7 @@ tfoot td {
     background: linear-gradient(to right, var(--table-lt-color), var(--table-dk-color));
     margin: 24px;
     border-radius: 24px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
 .table-controls {
@@ -120,7 +122,7 @@ tfoot td {
 }
 
 .table-controls-search {
-    float: right;
+    float: right;	
     margin-right: 32px;
 }
 
@@ -359,7 +361,7 @@ tfoot td {
     background: url('add.svg');
     background-position: center;
     background-size: contain;
-    background-color: limegreen;
+    background-color: #50C070;
     margin-top: 8px;
     margin-right: 8px;
     margin-bottom: 8px;
@@ -387,6 +389,36 @@ tfoot td {
 }
 
 .table-new-column-button:focus {
+    outline: none;
+}
+
+.table-new-row-button-container {
+    height: 60px;
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+}
+
+.table-new-row-button {
+    width: 160px;
+    height: 40px;
+    color: white;
+    background-color: #50B070;
+    background-image: url('add.svg');
+    background-size: 10%;
+    background-position: 7.5% center;
+    background-repeat: no-repeat;
+    padding-left: 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+.table-new-row-button:hover {
+    background-color: #50C070;
+}
+
+.table-new-row-button:focus {
     outline: none;
 }
 
@@ -459,14 +491,118 @@ tfoot td {
     top: 0;
     width: 100%;
     height: 100vh;
-    background-color: #454545;
 }
 
-.popup {
-    position: relative;
-    min-width: 600px;
+.popup-curtain::before {
+    filter: grayscale(1);
+}
+
+#popup-curtain {
+    position: absolute;
+    background-color: #E5E5E5;
+    opacity: 0.45;
+    width: 100%;
+    height: 100vh;
+}
+
+#nt-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 700px;
     height: 540px;
-    background-color: #EEEEEE;
-    margin: 160px 50% 160px 10%;
-    border-radius: 16px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+    margin: -220px 0 0 -350px;
+    border-radius: 8px;
+}
+
+#dt-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 450px;
+    height: 240px;
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+    margin: -80px 0 0 -225px;
+    border-radius: 8px;
+}
+
+.dt-popup-escape {
+    float: right;
+    width: 20px;
+    height: 20px;
+    background-color: #FF3366;
+    background-image: url('delete.svg');
+    background-position: center;
+    background-size: contain;
+    margin: 18px;
+    border: none;
+    border-radius: 12px;
+}
+
+.dt-popup-escape:hover {
+    background-color: #DD1144;
+}
+
+.dt-popup-escape:focus {
+    outline: none;
+}
+
+.dt-popup-header {
+    color: #777777;
+    padding-top: 36px;
+    padding-left: 36px;
+    font-size: 24px;
+}
+
+.dt-popup-body {
+    color: #AAAAAA;
+    padding-top: 18px;
+    padding-left: 48px;
+    padding-right: 92px;
+    font-size: 16px;
+}
+
+.dt-popup-options {
+    padding-top: 28px;
+    text-align: center;
+}
+
+.dt-popup-continue {
+    width: 140px;
+    height: 50px;
+    color: white;
+    background-color: #454545;
+    margin-right: 48px;
+    border: none;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
+.dt-popup-continue:hover {
+    background-color: #FF3366;
+}
+
+.dt-popup-continue:focus {
+    outline: none;
+}
+
+.dt-popup-cancel {
+    width: 140px;
+    height: 50px;
+    color: white;
+    background-color: #454545;
+    border: none;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
+.dt-popup-cancel:hover {
+    background-color: #FF3366;
+}
+
+.dt-popup-cancel:focus {
+    outline: none;
 }
