@@ -59,6 +59,67 @@ function newTablePopup() {
     var popups_container = document.getElementById('popups-container');
     var popup = document.createElement('div');
     popup.setAttribute('id', 'nt-popup');
+    var popup_escape = document.createElement('button');
+    popup_escape.setAttribute('class', 'popup-escape');
+    popup_escape.setAttribute('onclick', 'removePopup("nt");');
+    var popup_header = document.createElement('div');
+    popup_header.setAttribute('class', 'nt-popup-header');
+    tname = name.replace('-', ' ');
+    tname = tname.replace(/\w\S*/g, c => c.charAt(0).toUpperCase() + c.substr(1).toLowerCase());
+    popup_header.innerHTML = 'Add New Table'
+    var popup_body = document.createElement('div');
+    popup_body.setAttribute('class', 'nt-popup-body');
+    var popup_radio_load = document.createElement('input');
+    popup_radio_load.setAttribute('id', 'nt-popup-body-radio-load');
+    popup_radio_load.setAttribute('type', 'radio');
+    popup_radio_load.setAttribute('name', 'new-table');
+    popup_radio_load.checked = true;
+    var popup_radio_load_text = document.createElement('span');
+    popup_radio_load_text.setAttribute('class', 'nt-popup-body-radio-load-text');
+    popup_radio_load_text.innerHTML = 'Load from file';
+    var popup_radio_empty = document.createElement('input');
+    popup_radio_empty.setAttribute('id', 'nt-popup-body-radio-empty');
+    popup_radio_empty.setAttribute('type', 'radio');
+    popup_radio_empty.setAttribute('name', 'new-table');
+    var popup_radio_empty_text = document.createElement('span');
+    popup_radio_empty_text.setAttribute('class', 'nt-popup-body-radio-load-text');
+    popup_radio_empty_text.innerHTML = 'Empty table';
+    var popup_file_notice = document.createElement('p');
+    popup_file_notice.className = 'nt-popup-body-p';
+    popup_file_notice.innerHTML = 'Note: Currently supported file types to load from are limited to .json .csv and .xlsx';
+    var popup_file_input = document.createElement('input');
+    popup_file_input.id = 'nt-popup-file';
+    popup_file_input.type = 'file';
+    popup_file_input.accept = '.json,.csv,.xlsx';
+    var popup_load_editor_container = document.createElement('div');
+    var popup_table_name = document.createElement('input');
+    popup_table_name.id = 'nt-popup-table-name-input';
+    popup_table_name.type = 'text';
+    popup_table_name.placeholder = 'table-name';
+    popup_body.appendChild(popup_radio_load);
+    popup_body.appendChild(popup_radio_load_text);
+    popup_body.appendChild(popup_radio_empty);
+    popup_body.appendChild(popup_radio_empty_text);
+    popup_body.appendChild(popup_file_notice);
+    popup_body.appendChild(popup_file_input);
+    popup_body.appendChild(popup_load_editor_container);
+    popup_body.appendChild(popup_table_name);
+    var popup_footer = document.createElement('div');
+    popup_footer.setAttribute('class', 'nt-popup-footer');
+    var popup_continue = document.createElement('button');
+    popup_continue.innerHTML = 'Add Table';
+    popup_continue.setAttribute('class', 'nt-popup-continue');
+    popup_continue.setAttribute('onclick', '');
+    var popup_cancel = document.createElement('button');
+    popup_cancel.setAttribute('class', 'nt-popup-cancel');
+    popup_cancel.innerHTML = 'Cancel';
+    popup_cancel.setAttribute('onclick', 'removePopup("nt");');
+    popup_footer.appendChild(popup_continue);
+    popup_footer.appendChild(popup_cancel);
+    popup.appendChild(popup_escape);
+    popup.appendChild(popup_header);
+    popup.appendChild(popup_body);
+    popup.appendChild(popup_footer);
     popups_container.appendChild(popup);
     new_table_button.style.display = 'none';
     popups_container.style.display = 'block';
@@ -74,7 +135,7 @@ function deleteTablePopup(name) {
     var popup = document.createElement('div');
     popup.setAttribute('id', 'dt-popup');
     var popup_escape = document.createElement('button');
-    popup_escape.setAttribute('class', 'dt-popup-escape');
+    popup_escape.setAttribute('class', 'popup-escape');
     popup_escape.setAttribute('onclick', 'removePopup("dt");');
     var popup_header = document.createElement('div');
     popup_header.setAttribute('class', 'dt-popup-header');
@@ -243,12 +304,17 @@ function buildTable(t) {
     t_html.setAttribute('id', name);
     // Create Table Head
     var thead_html = document.createElement('thead');
+    thead_html.id = name.concat('-head');
     var tr_html = document.createElement('tr');
     for (var hdr in t.rows[0]) {
         var th_html = document.createElement('th');
         th_html.setAttribute('id', name.concat('-th-').concat(t.rows[0][hdr].replace(" ", "-").toLowerCase()));
         th_html.setAttribute('class', 'table-th');
-        th_html.innerHTML = t.rows[0][hdr];
+        var thc_html = document.createElement('div');
+        thc_html.setAttribute('id', name.concat('-hc-').concat(t.rows[0][hdr].replace(" ", "-").toLowerCase()));
+        thc_html.setAttribute('class', 'table-thc');
+        thc_html.innerHTML = t.rows[0][hdr];
+        th_html.appendChild(thc_html);
         tr_html.appendChild(th_html);
     }
     var th_html = document.createElement('th');
@@ -262,6 +328,7 @@ function buildTable(t) {
     t_html.appendChild(thead_html);
     // Create Table Foot
     var tfoot_html = document.createElement('tfoot');
+    tfoot_html.id = name.concat('-foot');
     var tr_html = document.createElement('tr');
     //for (i = 0; i < t.cols; i++) {
     //    var td_html = document.createElement('td');
@@ -276,12 +343,14 @@ function buildTable(t) {
     t_nr_button.setAttribute('id', name.concat('-new-row-button'));
     t_nr_button.setAttribute('class', 'table-new-row-button');
     t_nr_button.innerHTML = 'Add New Row';
+    t_nr_button.setAttribute('onclick', 'newRowEdit("'.concat(name).concat('");'));
     td_html.appendChild(t_nr_button);
     tr_html.appendChild(td_html);
     tfoot_html.appendChild(tr_html);
     t_html.appendChild(tfoot_html);
     // Create Table Body
     var tbody_html = document.createElement('tbody');
+    tbody_html.id = name.concat('-body');
     for (i = 1; i < t.rows.length; i++) {
         var tr_html = document.createElement('tr');
         if (i % 2 == 1) {
@@ -290,7 +359,11 @@ function buildTable(t) {
         for (var cell in t.rows[i]) {
             var td_html = document.createElement('td');
             td_html.setAttribute('class', 'table-data');
-            td_html.innerHTML = t.rows[i][cell];
+            var tc_html = document.createElement('div');
+            tc_html.setAttribute('id', name.concat('-cell-').concat(i.toString()).concat('-').concat(cell.toString().toLowerCase()));
+            tc_html.setAttribute('class', 'table-cell');
+            tc_html.innerHTML = t.rows[i][cell];
+            td_html.appendChild(tc_html);
             tr_html.appendChild(td_html);
         }
         var tr_actions_html = document.createElement('td');
@@ -343,6 +416,7 @@ function addTable(t) {
     var t_top_edit = document.createElement('button');
     t_top_edit.setAttribute('id', name.concat('-controls-edit'));
     t_top_edit.setAttribute('class', 'table-controls-edit');
+    t_top_edit.setAttribute('onclick', 'editMode(this.id.slice(0, -14))');
     var t_top_delete = document.createElement('button');
     t_top_delete.setAttribute('id', name.concat('-controls-delete'));
     t_top_delete.setAttribute('class', 'table-controls-delete');
@@ -417,6 +491,42 @@ function removeRow(name, row) {
             tables[i].rmv_row(row);
             updateTable(name);
             return;
+        }
+    }
+}
+
+function newRowEdit(name) {
+    console.log(name);
+}
+
+function addRow(name) {
+    //pass
+}
+
+function editMode(name) {
+    var head = document.getElementById(name.concat('-head'));
+    var headers = head.getElementsByClassName('table-th');
+    var headercs = head.getElementsByClassName('table-thc');
+    for (i = 0; i < headers.length; i++) {
+        headers[i].classList.toggle('th-editing');
+        headercs[i].classList.toggle('thc-editing');
+        if (headercs[i].contentEditable != 'true') {
+            headercs[i].setAttribute('contenteditable', 'true');
+        } else {
+            headercs[i].setAttribute('contenteditable', 'false');
+        }
+    }
+    
+    var body = document.getElementById(name.concat('-body'));
+    var data = body.getElementsByClassName('table-data');
+    var cells = body.getElementsByClassName('table-cell');
+    for (i = 0; i < data.length; i++) {
+        data[i].classList.toggle('td-editing');
+        cells[i].classList.toggle('tc-editing');
+        if (cells[i].contentEditable != 'true') {
+            cells[i].setAttribute('contenteditable', 'true');
+        } else {
+            cells[i].setAttribute('contenteditable', 'false');
         }
     }
 }
