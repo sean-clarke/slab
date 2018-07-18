@@ -41,10 +41,14 @@ th {
 td {
     padding: 8px 16px;
     border-top: thin solid var(--table-aux-pri-color);
+    text-align: left;
 }
 
 tfoot td {
     height: 20px;
+}
+
+tbody {
 }
 
 #app-header {
@@ -160,6 +164,7 @@ tfoot td {
     border: none;
     border-radius: 24px;
     box-sizing: border-box;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     font-size: 14px;
     opacity: 0.95;
     transition: width 0.5s;
@@ -312,14 +317,15 @@ tfoot td {
     box-sizing: border-box;
 }
 
-.table-controls-edit:hover {
-    border: 4px solid var(--table-text-color);
+.table-controls-edit:hover:enabled {
+    background-color: rgba(255, 255, 255, 0.25);
     cursor: pointer;
 }
 
-.table-controls-edit:active {
+.table-controls-edit:active:enabled {
     width: 36px;
     height: 36px;
+    background-color: rgba(0, 0, 0, 0.25);
     margin-top: 2px;
     margin-right: 34px;
     margin-left: 2px;
@@ -342,6 +348,7 @@ tfoot td {
     margin-right: 8px;
     border: 2px solid var(--table-text-color);
     border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: width 0.25s, height 0.25s, margin 0.25s, background-color 0.5s;
 }
 
@@ -390,17 +397,18 @@ tfoot td {
 
 .thc-editing {
     padding: 11px 21px;
-    border: 1px solid var(--table-aux-sec-color);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid transparent;
     border-radius: 6px;
 }
 
 .thc-editing:hover {
-    border: 1px solid white;
+    border: 1px solid var(--table-text-color);
 }
 
 .thc-editing:focus {
-    background-color: var(--table-aux-pri-color);
-    border: 1px solid var(--table-aux-pri-color);
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--table-text-color);
     outline: none;
 }
 
@@ -419,9 +427,15 @@ tfoot td {
     border: 2px solid white;
     box-sizing: border-box;
     border-radius: 18px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-.table-new-column-button:hover {
+.table-new-column-button:disabled {
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.table-new-column-button:hover:enabled {
     width: 32px;
     height: 32px;
     margin-top: 4px;
@@ -431,7 +445,7 @@ tfoot td {
     padding: 0px;
 }
 
-.table-new-column-button:active {
+.table-new-column-button:active:enabled {
     width: 28px;
     height: 28px;
     margin: 6px;
@@ -463,19 +477,43 @@ tfoot td {
     padding: 10px 20px;
 }
 
+.table-empty-edit-cell {
+    height: 24px;
+    color: #333333;
+    background-color: white;
+    margin: 1px 8px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    line-height: 24px;
+    opacity: 0.8;
+}
+
+.table-empty-edit-cell:hover {
+    cursor: text;
+    opacity: 0.9;
+}
+
+.table-empty-edit-cell:focus {
+    opacity: 1;
+    outline: none;
+}
+
 .tc-editing {
     padding: 9px 19px;
-    border: 1px solid var(--table-aux-sec-color);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid transparent;
     border-radius: 6px;
 }
 
 .tc-editing:hover {
-    border: 1px solid white;
+    border: 1px solid var(--table-text-color);
 }
 
 .tc-editing:focus {
-    background-color: var(--table-aux-pri-color);
-    border: 1px solid var(--table-aux-pri-color);
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--table-text-color);
     outline: none;
 }
 
@@ -487,7 +525,7 @@ tfoot td {
 }
 
 .table-new-row-button {
-    width: 160px;
+    width: 180px;
     height: 40px;
     color: white;
     background-color: #50B070;
@@ -496,16 +534,65 @@ tfoot td {
     background-position: 7.5% center;
     background-repeat: no-repeat;
     padding-left: 24px;
-    border: none;
+    border: 2px solid white;
+    border-radius: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+}
+
+.table-new-row-button:disabled {
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.table-new-row-button:hover:enabled {
+    background-color: #50C070;
+}
+
+.table-new-row-button:focus:enabled {
+    outline: none;
+}
+
+.table-new-row-button:active:enabled {
+    background-color: #50B070;
+}
+
+.table-new-row-confirm-button {
+    width: 100px;
+    height: 40px;
+    color: white;
+    background: transparent;
+    margin-right: 12px;
+    border: 2px solid white;
     border-radius: 4px;
     font-size: 18px;
 }
 
-.table-new-row-button:hover {
-    background-color: #50C070;
+.table-new-row-confirm-button:hover {
+    background: #50B070;
+    border: 2px solid white;
 }
 
-.table-new-row-button:focus {
+.table-new-row-confirm-button:focus {
+    outline: none;
+}
+
+.table-new-row-cancel-button {
+    width: 100px;
+    height: 40px;
+    color: white;
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+.table-new-row-cancel-button:hover {
+    background: #FF3366;
+    border: 2px solid white;
+}
+
+.table-new-row-cancel-button:focus {
     outline: none;
 }
 
@@ -517,13 +604,13 @@ tfoot td {
 .table-row-actions-button {
     width: 24px;
     height: 24px;
+    background: url('remove.svg');
+    background-size: contain;
+    background-position: center;
     margin-top: 12px;
     margin-bottom: 10px;
     padding: 0px;
     border: none;
-    background: url('remove.svg');
-    background-size: contain;
-    background-position: center;
     transition: 0.1s linear;
 }
 
@@ -532,7 +619,7 @@ tfoot td {
     to {transform:rotate(180deg);}
 }
 
-.table-row-actions-button:hover {
+.table-row-actions-button:hover:enabled {
     -webkit-animation: spin 0.25s linear 1;
     width: 32px;
     height: 32px;
@@ -544,11 +631,17 @@ tfoot td {
     outline: none;
 }
 
-.table-row-actions-button:active {
+.table-row-actions-button:active:enabled {
     margin-top: 12px;
     margin-bottom: 10px;
     width: 24px;
     height: 24px;
+    transition-duration: 0s;
+}
+
+.table-row-actions-button:disabled {
+    filter: grayscale(100%);
+    opacity: 0.5;
     transition-duration: 0s;
 }
 
@@ -597,10 +690,10 @@ tfoot td {
     top: 50%;
     left: 50%;
     width: 800px;
-    height: 540px;
+    height: 600px;
     background-color: #FFFFFF;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
-    margin: -220px 0 0 -400px;
+    margin: -250px 0 0 -400px;
     border-radius: 8px;
 }
 
@@ -655,7 +748,7 @@ tfoot td {
 
 .nt-popup-body {
     width: 700px;
-    height: 400px;
+    height: 460px;
     color: #AAAAAA;
     padding-top: 18px;
     padding-left: 50px;
@@ -681,7 +774,64 @@ tfoot td {
 
 .nt-popup-body-p {
     margin-left: 8px;
+    margin-bottom: 12px;
     color: #0088DD;
+}
+
+#nt-popup-file {
+    display: none;
+}
+
+#nt-popup-file-label {
+    display: inline-block;
+    color: grey;
+    background: url('upload.svg');
+    background-position: 9% center;
+    background-size: 20%;
+    background-repeat: no-repeat;
+    margin: 4px 8px;
+    padding: 8px 12px 8px 48px;
+    border: 1px solid #0088DD;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+#nt-popup-file-label:hover {
+    color: #44BBFF;
+    border: 2px solid #0088DD;
+    padding: 7px 11px 7px 47px;
+}
+
+#nt-popup-load-editor-container {
+    height: 250px;
+}
+
+#nt-popup-table-name-text {
+    color: grey;
+    margin: 4px;
+}
+
+#nt-popup-table-name-input {
+    width: 240px;
+    height: 16px;
+    padding: 8px 16px;
+    border: thin solid grey;
+    border-radius: 4px;
+}
+
+#nt-popup-table-name-input:hover {
+    background-color: #F5F5F5;
+    cursor: text;
+}
+
+#nt-popup-table-name-input:focus {
+    background-color: #EEEEEE;
+    outline: none;
+}
+
+#nt-popup-table-name-example {
+    margin: 4px;
+    font-size: 14px;
 }
 
 .nt-popup-footer {
@@ -696,19 +846,26 @@ tfoot td {
 .nt-popup-continue {
     width: 100px;
     height: 40px;
-    color: #AAAAAA;
+    color: white;
     background-color: transparent;
     margin-right: 24px;
-    border: 1px solid #AAAAAA;
+    border: 1px solid white;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
 }
 
-.nt-popup-continue:hover {
+.nt-popup-continue:disabled {
+    color: #AAAAAA;
+    border: 1px solid #AAAAAA;
 }
 
-.nt-popup-continue:focus {
+.nt-popup-continue:hover:enabled {
+    color: #454545;
+    background-color: white;
+}
+
+.nt-popup-continue:focus:enabled {
     outline: none;
 }
 
