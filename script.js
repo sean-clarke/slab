@@ -21,7 +21,7 @@ function Table(name) {
         for (var hdr in this.rows[0]) {
         nr[this.rows[0][hdr]] = v[hdr];
         }
-        this.rows.push(nr)
+        this.rows.push(nr);
     }
     this.rmv_col = function (hdr) {
         
@@ -73,6 +73,7 @@ function newTablePopup() {
     popup_radio_load.setAttribute('id', 'nt-popup-body-radio-load');
     popup_radio_load.setAttribute('type', 'radio');
     popup_radio_load.setAttribute('name', 'new-table');
+    popup_radio_load.setAttribute('onclick', 'getElementById("nt-popup-add-table").disabled=true');
     popup_radio_load.checked = true;
     var popup_radio_load_text = document.createElement('span');
     popup_radio_load_text.setAttribute('class', 'nt-popup-body-radio-load-text');
@@ -81,35 +82,52 @@ function newTablePopup() {
     popup_radio_empty.setAttribute('id', 'nt-popup-body-radio-empty');
     popup_radio_empty.setAttribute('type', 'radio');
     popup_radio_empty.setAttribute('name', 'new-table');
+    popup_radio_empty.setAttribute('onclick', 'getElementById("nt-popup-add-table").disabled=false');
     var popup_radio_empty_text = document.createElement('span');
     popup_radio_empty_text.setAttribute('class', 'nt-popup-body-radio-load-text');
     popup_radio_empty_text.innerHTML = 'Empty table';
     var popup_file_notice = document.createElement('p');
     popup_file_notice.className = 'nt-popup-body-p';
     popup_file_notice.innerHTML = 'Note: Currently supported file types to load from are limited to .json .csv and .xlsx';
+    var popup_file_input_label = document.createElement('label');
+    popup_file_input_label.id = 'nt-popup-file-label';
+    popup_file_input_label.setAttribute ('for', 'nt-popup-file');
+    popup_file_input_label.innerHTML = 'Upload Data';
     var popup_file_input = document.createElement('input');
     popup_file_input.id = 'nt-popup-file';
     popup_file_input.type = 'file';
     popup_file_input.accept = '.json,.csv,.xlsx';
     var popup_load_editor_container = document.createElement('div');
+    popup_load_editor_container.id = 'nt-popup-load-editor-container';
+    var popup_table_name_text = document.createElement('p');
+    popup_table_name_text.id = 'nt-popup-table-name-text';
+    popup_table_name_text.innerHTML = 'Table Name';
     var popup_table_name = document.createElement('input');
     popup_table_name.id = 'nt-popup-table-name-input';
     popup_table_name.type = 'text';
-    popup_table_name.placeholder = 'table-name';
+    var popup_table_name_example = document.createElement('p');
+    popup_table_name_example.id = 'nt-popup-table-name-example';
+    popup_table_name_example.innerHTML = "eg. employee-table, animal-kingdom, marathons-2018";
     popup_body.appendChild(popup_radio_load);
     popup_body.appendChild(popup_radio_load_text);
     popup_body.appendChild(popup_radio_empty);
     popup_body.appendChild(popup_radio_empty_text);
     popup_body.appendChild(popup_file_notice);
+    popup_body.appendChild(popup_file_input_label);
     popup_body.appendChild(popup_file_input);
     popup_body.appendChild(popup_load_editor_container);
+    popup_body.appendChild(popup_table_name_text);
     popup_body.appendChild(popup_table_name);
+    popup_body.appendChild(popup_table_name_example);
     var popup_footer = document.createElement('div');
     popup_footer.setAttribute('class', 'nt-popup-footer');
     var popup_continue = document.createElement('button');
     popup_continue.innerHTML = 'Add Table';
+    popup_continue.setAttribute('id', 'nt-popup-add-table');
     popup_continue.setAttribute('class', 'nt-popup-continue');
-    popup_continue.setAttribute('onclick', '');
+    popup_continue.setAttribute('type', 'button');
+    popup_continue.setAttribute('disabled', 'true');
+    popup_continue.setAttribute('onclick', 'addNewTable();');
     var popup_cancel = document.createElement('button');
     popup_cancel.setAttribute('class', 'nt-popup-cancel');
     popup_cancel.innerHTML = 'Cancel';
@@ -450,6 +468,7 @@ function addTable(t) {
 function updateTable(name) {
     var table_container = document.getElementById(name.concat('-container'));
     var table = document.getElementById(name);
+    document.getElementById(name.concat('-controls-edit')).disabled = false;
     table_container.removeChild(table);
     for (i = 0; i < tables.length; i++) {
         if (tables[i].name == name) {
@@ -472,6 +491,13 @@ function removeTable(name) {
     var tables_container = document.getElementById('tables-container');
     var table_container = document.getElementById(name.concat('-container'));
     tables_container.removeChild(table_container);
+    for (i = 0; i < tables.length; i++) {
+        if (tables[i].name == name) {
+            delete tables[i];
+            tables.splice(i, 1);
+            break;
+        }
+    }
     removePopup('dt');
 }
 
@@ -496,27 +522,93 @@ function removeRow(name, row) {
 }
 
 function newRowEdit(name) {
-    console.log(name);
+    tbody = document.getElementById(name.concat('-body'));
+    new_row_button = document.getElementById(name.concat('-new-row-button'));
+    new_row_button_container = new_row_button.parentElement;
+    new_row_button.style.display = 'none';
+    document.getElementById(name.concat('-controls-edit')).disabled = 'true';
+    for (i = 0; i < tables.length; i++) {
+        if (tables[i].name == name) {
+            trow = document.createElement('tr');
+            trow.setAttribute('id', name.concat('-new-tr'));
+            for (var hdr in tables[i].rows[0]) {
+                tdata = document.createElement('td');
+                tcell = document.createElement('div');
+                //tcell = document.createElement('div');
+                //tcell.setAttribute('id', name.concat('-cell-').concat(tables[i].rows.length.toString()).concat('-').concat(tables[i].rows[0][hdr].toString().toLowerCase()));
+                tcell.setAttribute('contentEditable', 'true');
+                tcell.addEventListener('keypress', function(e) { if (e.keyCode === 13) { e.preventDefault();} });
+                tcell.setAttribute('class', 'table-empty-edit-cell');
+                tdata.appendChild(tcell);
+                trow.appendChild(tdata);
+            }
+            tdata = document.createElement('td');
+            tcell = document.createElement('div');
+            tdata.appendChild(tcell);
+            trow.appendChild(tdata);
+            tbody.appendChild(trow);
+            var new_row_confirm_button = document.createElement('button');
+            new_row_confirm_button.setAttribute('class', 'table-new-row-confirm-button');
+            new_row_confirm_button.innerHTML = 'Confirm';
+            new_row_confirm_button.onclick = function () {
+                out_row = []
+                for (tdi = 0; tdi < trow.childNodes.length - 1; tdi++) {
+                    cv = trow.childNodes[tdi].childNodes[0].textContent;
+                    if (cv == '') {
+                        cv = '-';
+                    }
+                    out_row.push(cv);
+                }
+                tables[i].add_row(out_row);
+                tbody.removeChild(trow);
+                updateTable(name);
+            }
+            var new_row_cancel_button = document.createElement('button');
+            new_row_cancel_button.setAttribute('class', 'table-new-row-cancel-button');
+            new_row_cancel_button.innerHTML = 'Cancel';
+            new_row_cancel_button.onclick = function () {
+                tbody.removeChild(trow);
+                new_row_button.style.display = 'inline-block';
+                new_row_button_container.removeChild(new_row_confirm_button);
+                new_row_button_container.removeChild(new_row_cancel_button);
+                document.getElementById(name.concat('-controls-edit')).disabled = false;
+            }
+            new_row_button_container.appendChild(new_row_confirm_button);
+            new_row_button_container.appendChild(new_row_cancel_button);
+            return;
+        }
+    }
 }
 
-function addRow(name) {
-    //pass
+function addNewTable() {
+    if (document.querySelector('input[name="new-table"]:checked').id.slice(20) == "empty") {
+        tname = document.querySelector('input[id="nt-popup-table-name-input"]').value;
+        if (tname == '') {
+            tname = 'table'.concat(tables.length.toString());
+        }
+        var newtable = new Table(tname);
+        addTable(newtable);
+    } else {
+        //pass
+    }
 }
 
 function editMode(name) {
     var head = document.getElementById(name.concat('-head'));
     var headers = head.getElementsByClassName('table-th');
     var headercs = head.getElementsByClassName('table-thc');
+    var update = false;
     for (i = 0; i < headers.length; i++) {
         headers[i].classList.toggle('th-editing');
         headercs[i].classList.toggle('thc-editing');
         if (headercs[i].contentEditable != 'true') {
             headercs[i].setAttribute('contenteditable', 'true');
+            headercs[i].addEventListener('keypress', function(e) { if (e.keyCode === 13) { e.preventDefault();} });
         } else {
             headercs[i].setAttribute('contenteditable', 'false');
+            update = true;
         }
     }
-    
     var body = document.getElementById(name.concat('-body'));
     var data = body.getElementsByClassName('table-data');
     var cells = body.getElementsByClassName('table-cell');
@@ -525,8 +617,41 @@ function editMode(name) {
         cells[i].classList.toggle('tc-editing');
         if (cells[i].contentEditable != 'true') {
             cells[i].setAttribute('contenteditable', 'true');
+            cells[i].addEventListener('keypress', function(e) { if (e.keyCode === 13) { e.preventDefault();} });
         } else {
             cells[i].setAttribute('contenteditable', 'false');
+            update = true;
+        }
+    }
+    if (update == true) {
+        for (i = 0; i < tables.length; i++) {
+            if (tables[i].name == name) {
+                tables[i].rows = [{}];
+                for (hi = 0; hi < headercs.length; hi++) {
+                    tables[i].rows[0][hi] = headercs[hi].textContent;
+                }
+                for (ri = 0; ri < body.childNodes.length; ri++) {
+                    out_row = [];
+                    trow = body.childNodes[ri];
+                    for (ci = 0; ci < trow.childNodes.length - 1; ci++) {
+                        cv = trow.childNodes[ci].childNodes[0].textContent;
+                        if (cv == '') {
+                            cv = '-';
+                        }
+                        out_row.push(cv);
+                    }
+                    tables[i].add_row(out_row);
+                }
+                updateTable(name);
+                return;
+            }
+        }
+    } else {
+        document.getElementById(name.concat('-new-row-button')).disabled = 'true';
+        document.getElementById(name.concat('-new-column-button')).disabled = 'true';
+        dcs = body.getElementsByClassName('table-row-actions-button');
+        for (dc = 0; dc < dcs.length; dc++) {
+            dcs[dc].disabled = 'true';
         }
     }
 }
@@ -565,8 +690,5 @@ at.add_row(['Grizzly Bear', 'Mammal', 'Omnivore', 'Terrestrial']);
 at.add_row(['African Dwarf Frog', 'Amphibian', 'Carnivore', 'Aquatic']);
 at.add_row(['Sea Turtle', 'Reptile', 'Omnivorous', 'Aquatic']);
 
-var et = new Table('empty-table');
-
 addTable(ot);
 addTable(at);
-addTable(et);
