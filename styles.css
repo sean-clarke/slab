@@ -392,7 +392,15 @@ tbody {
 }
 
 .table-thc {
+    max-width: 160px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     padding: 12px 22px;
+}
+
+.table-thc:focus {
+    max-width: none;
 }
 
 .thc-editing {
@@ -478,7 +486,15 @@ tbody {
 }
 
 .table-cell {
+    max-width: 160px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     padding: 10px 20px;
+}
+
+.table-cell:focus {
+    max-width: none;
 }
 
 .table-empty-edit-cell {
