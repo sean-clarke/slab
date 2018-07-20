@@ -10,6 +10,12 @@ function Table(name) {
         if (hdr === undefined) {
             hdr = 'C'.concat(this.cols.toString());
         }
+        for (i = 0; i < this.cols; i++) {
+            if (hdr == this.rows[0][i]) {
+                hdr = hdr.concat('*');
+                i = -1;
+            }
+        }
         this.rows[0][this.cols] = hdr;
         for (i = 1; i < this.rows.length; i++) {
             this.rows[i][hdr] = dflt;
@@ -24,7 +30,6 @@ function Table(name) {
         this.rows.push(nr);
     }
     this.rmv_col = function (hdr) {
-        
         var found = false;
         for (key in this.rows[0]) {
             if (found) {
@@ -421,7 +426,8 @@ function buildTable(t) {
         var thc_html = document.createElement('div');
         thc_html.setAttribute('id', name.concat('-hc-').concat(t.rows[0][hdr].replace(" ", "-").toLowerCase()));
         thc_html.setAttribute('class', 'table-thc');
-        thc_html.innerHTML = t.rows[0][hdr];
+        var header_content = t.rows[0][hdr];
+        thc_html.innerHTML = header_content;
         th_html.appendChild(thc_html);
         tr_html.appendChild(th_html);
     }
@@ -720,6 +726,12 @@ function editMode(name) {
             if (tables[i].name == name) {
                 tables[i].rows = [{}];
                 for (hi = 0; hi < headercs.length; hi++) {
+                    for (thi = 0; thi < hi; thi++) {
+                        if (headercs[hi].textContent == tables[i].rows[0][thi]) {
+                            headercs[hi].textContent = headercs[hi].textContent.concat('*');
+                            thi = -1;
+                        }
+                    }
                     tables[i].rows[0][hi] = headercs[hi].textContent;
                 }
                 for (ri = 0; ri < body.childNodes.length; ri++) {
