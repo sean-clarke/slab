@@ -669,7 +669,48 @@ tbody {
 }
 
 .table-nav {
-    height: 100px;
+    height: 80px;
+    margin-top: 32px;
+}
+
+.table-rpp {
+    position: relative;
+    width: 60px;
+    height: 32px;
+    margin-left: 50px;
+    padding-top: 10px;
+    border: 2px solid var(--table-text-color);
+    border-radius: 24px;
+}
+
+.table-rpp:hover {
+    height: 292px;
+    padding-top: 12px;
+    top: -262px;
+    background-color: rgba(255, 255, 255, 1);
+}
+
+.table-bottom-rpp-option {
+    height: 32px;
+    width: 52px;
+    display: block;
+    color: var(--table-lt-color);
+    background: transparent;
+    padding: 4px;
+    margin: 4px;
+    border: none;
+    font-size: 16px;
+    font-family: Roboto;
+    font-weight: bold;
+}
+
+.table-bottom-rpp-option:hover {
+    color: white;
+    background: var(--table-lt-color);
+}
+
+.table-bottom-rpp-option:focus {
+    outline: none;
 }
 
 .selection {
@@ -957,6 +998,108 @@ tbody {
     border: thin solid #B5B5B5;
 }
 
+#nt-popup-table-editor-counters {
+    display: none;
+}
+
+#nt-popup-table-editor-column-counter {
+    display: inline-block;
+    margin-top: 24px;
+    margin-left: 8px;
+}
+
+#nt-popup-table-editor-column-counter input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+#nt-popup-table-editor-column-counter-title {
+    color: #888888;
+    margin: 0px;
+    padding: 0px;
+    padding-bottom: 4px;
+    font-size: 12px;
+}
+
+#nt-popup-table-editor-column-counter-dec-button {
+    float: left;
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    color: white;
+    background-color: #3399EE;
+    margin: 0px;
+    margin-left: 8px;
+    padding: 0px;
+    border: 2px solid #3399EE;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#nt-popup-table-editor-column-counter-dec-button:hover {
+    background: linear-gradient(to right, #55CCFF, #3399EE);
+    border: none;
+}
+
+#nt-popup-table-editor-column-counter-dec-button:focus {
+    outline: none;
+}
+
+#nt-popup-table-editor-column-counter-value {
+    float: left;
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 40px;
+    color: #888888;
+    margin: 0px;
+    padding: 0px;
+    border-top: 2px solid #3399EE;
+    border-bottom: 2px solid #3399EE;
+    border-left: none;
+    border-right: none;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 16px;
+    font-family: Roboto;
+}
+
+#nt-popup-table-editor-column-counter-value:focus {
+    outline: none;
+}
+
+#nt-popup-table-editor-column-counter-inc-button {
+    float: left;
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    color: white;
+    background-color: #3399EE;
+    margin: 0px;
+    padding: 0px;
+    border: 2px solid #3399EE;
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#nt-popup-table-editor-column-counter-inc-button:hover {
+    background: linear-gradient(to right, #3399EE, #55CCFF);
+    border: none;
+}
+
+#nt-popup-table-editor-column-counter-inc-button:focus {
+    outline: none;
+}
+
 #nt-popup-table-name-text {
     color: grey;
     margin: 4px;
@@ -1012,8 +1155,17 @@ tbody {
 }
 
 .nt-popup-continue:hover:enabled {
+    color: white;
+    background-color: #3399EE;
+    border: 1px solid #3399EE;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.nt-popup-continue:active:enabled {
     color: #454545;
     background-color: white;
+    border: 1px solid white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .nt-popup-continue:focus:enabled {
@@ -1033,8 +1185,17 @@ tbody {
 }
 
 .nt-popup-cancel:hover {
+    color: white;
+    background-color: #DD1144;
+    border: 1px solid #DD1144;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.nt-popup-cancel:active {
     color: #454545;
     background-color: white;
+    border: 1px solid white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .nt-popup-cancel:focus {
