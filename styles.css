@@ -674,42 +674,82 @@ tbody {
 }
 
 .table-rpp {
-    position: relative;
+    float: left;
     width: 60px;
-    height: 32px;
+    height: 40px;
     margin-left: 50px;
-    padding-top: 10px;
+    padding-top: 4px;
     border: 2px solid var(--table-text-color);
     border-radius: 24px;
+    white-space: no-wrap;
+    font-size: 18px;
 }
 
 .table-rpp:hover {
-    height: 292px;
-    padding-top: 12px;
-    top: -262px;
-    background-color: rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0.35);
 }
 
 .table-bottom-rpp-option {
-    height: 32px;
-    width: 52px;
-    display: block;
-    color: var(--table-lt-color);
+    display: inline-block;
+    color: var(--table-text-color);
     background: transparent;
-    padding: 4px;
-    margin: 4px;
-    border: none;
-    font-size: 16px;
+    padding: 6px 12px 4px;
+    margin-left: 4px;
+    margin-bottom: 18px;
+    border: 2px solid transparent;
+    border-radius: 50px;
+    font-size: 18px;
     font-family: Roboto;
-    font-weight: bold;
 }
 
 .table-bottom-rpp-option:hover {
-    color: white;
-    background: var(--table-lt-color);
+    border-color: var(--table-text-color);
 }
 
 .table-bottom-rpp-option:focus {
+    outline: none;
+}
+
+.table-page-select-container {
+    float: right;
+    position: relative;
+    top: 8px;
+    right: 36px;
+}
+
+.table-page-select {
+    width: 32px;
+    height: 32px;
+    color: var(--table-text-color);
+    background: none;
+    margin-left: 8px;
+    border: 2px solid transparent;
+    border-radius: 16px;
+    font-size: 16px;
+    font-family: Roboto;
+}
+
+.table-page-select:hover {
+    border-color: rgba(255,255,255,0.25);
+}
+
+.table-page-select:focus {
+    outline: none;
+}
+
+.table-current-page-select {
+    width: 32px;
+    height: 32px;
+    color: var(--table-text-color);
+    background: none;
+    margin-left: 8px;
+    border: 2px solid white;
+    border-radius: 16px;
+    font-size: 16px;
+    font-family: Roboto;
+}
+
+.table-current-page-select:focus {
     outline: none;
 }
 
@@ -1262,6 +1302,7 @@ tbody {
 ::-webkit-scrollbar {
     width: 12px;
     height: 12px;
+    background: white;
 }
 
 ::-webkit-scrollbar-thumb {
