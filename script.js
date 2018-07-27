@@ -448,6 +448,7 @@ function changeRPP(name, num_rows) {
     for (i = 0; i < tables.length; i++) {
         if (tables[i].name == name) {
             tables[i].size = num_rows;
+            tables[i].page = 0;
             updateTable(name);
             return;
         }
@@ -459,31 +460,31 @@ function displayRowsPerPage(name) {
     rpp_container.removeChild(rpp_container.childNodes[0]);
     var rpp_selection_5 = document.createElement('button');
     rpp_selection_5.setAttribute('class', 'table-bottom-rpp-option');
-    rpp_selection_5.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "5");'));
+    rpp_selection_5.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "5"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_5.innerHTML = '5';
     var rpp_selection_10 = document.createElement('button');
     rpp_selection_10.setAttribute('class', 'table-bottom-rpp-option');
-    rpp_selection_10.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "10");'));
+    rpp_selection_10.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "10"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_10.innerHTML = '10';
     var rpp_selection_25 = document.createElement('button');
     rpp_selection_25.setAttribute('class', 'table-bottom-rpp-option');
-    rpp_selection_25.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "25");'));
+    rpp_selection_25.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "25"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_25.innerHTML = '25';
     var rpp_selection_50 = document.createElement('button');
     rpp_selection_50.setAttribute('class', 'table-bottom-rpp-option');
-    rpp_selection_50.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "50");'));
+    rpp_selection_50.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "50"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_50.innerHTML = '50';
     var rpp_selection_100 = document.createElement('button');
     rpp_selection_100.setAttribute('class', 'table-bottom-rpp-option');
-    rpp_selection_100.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "100");'));
+    rpp_selection_100.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "100"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_100.innerHTML = '100';
     var rpp_selection_500 = document.createElement('button');
     rpp_selection_500.setAttribute('class', 'table-bottom-rpp-option');
-    rpp_selection_500.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "500");'));
+    rpp_selection_500.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "500"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_500.innerHTML = '500';
     var rpp_selection_2000 = document.createElement('button');
     rpp_selection_2000.setAttribute('class', 'table-bottom-rpp-option');
-    rpp_selection_2000.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "2000");'));
+    rpp_selection_2000.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "2000"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_2000.innerHTML = '2000';
     rpp_container.appendChild(rpp_selection_5);
     rpp_container.appendChild(rpp_selection_10);
@@ -496,20 +497,67 @@ function displayRowsPerPage(name) {
 
 function hideRowsPerPage(name) {
     var rows_selections = document.getElementById(name.concat('-bottom-rpp'));
-    while (rows_selections.firstChild) {
-        rows_selections.removeChild(rows_selections.firstChild);
+    rows_selections.style.width = '60px';
+    for (rtr = 0; rtr < rows_selections.children.length; rtr++) {
+        rows_selections.removeChild(rows_selections.childNodes[rtr]);
     }
     for (i = 0; i < tables.length; i++) {
         if (tables[i].name == name) {
-            var rows_selections = document.getElementById(name.concat('-bottom-rpp'));
-            rows_selections.innerHTML = tables[i].size;
+            rows_selections.innerHTML = '<p style="margin-top:8px">'.concat(tables[i].size).concat('</p>');
+            rows_selections.style.display = 'inline-block';
             return;
         }
     }
 }
 
+function updatePageSelect(t) {
+    var page_select_container = document.getElementById(t.name.concat('-page-select-container'));
+    var pages = Math.ceil((t.rows.length - 1) / t.size);
+    if (pages > 1) {
+        page_select_container.style.display = 'inline-block';
+        if ((t.page < 2) || ((t.page == 2) && (pages = 3))) {
+            for (p = 0; p < 3; p++) {
+                if (p >= pages) {
+                    page_select_container.childNodes[p].style.display = 'none';
+                    break;
+                }
+                page_select_container.childNodes[p].style.display = 'inline-block';
+                page_select_container.childNodes[p].innerHTML = p;
+                if (p == t.page) {
+                    page_select_container.childNodes[p].className = 'table-current-page-select';
+                    page_select_container.childNodes[p].disabled = true;
+                } else {
+                    page_select_container.childNodes[p].className = 'table-page-select';
+                    page_select_container.childNodes[p].disabled = false;
+                    page_select_container.childNodes[p].setAttribute('onclick', 'changePage("'.concat(t.name).concat('", ').concat(p.toString()).concat(');'));
+                }
+            }
+        } else if (t.page == pages) {
+            for (p = t.page - 2; p <= t.page; p++) {
+                page_select_container.childNodes[p].style.display = 'inline-block';
+                page_select_container.childNodes[p].innerHTML = p;
+                if (p == t.page) {
+                    page_select_container.childNodes[p].className = 'table-current-page-select';
+                    page_select_container.childNodes[p].disabled = true;
+                } else {
+                    page_select_container.childNodes[p].className = 'table-page-select';
+                    page_select_container.childNodes[p].disabled = false;
+                    page_select_container.childNodes[p].setAttribute('onclick', 'changePage("'.concat(t.name).concat('", ').concat(p.toString()).concat(');'));
+                }
+            }
+        } else {
+            for (p = t.page - 2; ((p <= pages) || (p <= (t.page + 2))); p++) {
+            }
+        }
+    } else {
+        for (psi = 0; psi < page_select_container.childNodes.length; psi++) {
+            page_select_container.childNodes[psi].style.display = 'none';
+        }
+    }
+}
+
 function buildTable(t) {
-    name = t.name;
+    var name = t.name;
     var t_html = document.createElement('table');
     t_html.setAttribute('id', name);
     // Create Table Head
@@ -653,20 +701,31 @@ function addTable(t) {
     var t_bottom_rpp = document.createElement('div');
     t_bottom_rpp.setAttribute('id', name.concat('-bottom-rpp'));
     t_bottom_rpp.setAttribute('class', 'table-rpp');
-    t_bottom_rpp.innerHTML = t.size;
-    t_bottom_rpp.setAttribute('onmouseenter', 'displayRowsPerPage("'.concat(name).concat('");'));
+    t_bottom_rpp.innerHTML = '<p style="margin-top:8px">'.concat(t.size).concat('</p>');
+    t_bottom_rpp.setAttribute('onclick', 'document.getElementById("'.concat(t_bottom_rpp.id).concat('").style.width = "420px"; displayRowsPerPage("').concat(name).concat('");'));
     t_bottom_rpp.setAttribute('onmouseleave', 'hideRowsPerPage("'.concat(name).concat('");'));
-    var t_page_select = document.createElement('div');
-    t_page_select.setAttribute('class', 'table-page_select');
-    t_page_select.setAttribute('id', name.concat('-page-select'));
+    var t_page_select_container = document.createElement('div');
+    t_page_select_container.setAttribute('class', 'table-page-select-container');
+    t_page_select_container.setAttribute('id', name.concat('-page-select-container'));
+    t_page_select_container.style.display = 'none';
+    var t_page_select_first = document.createElement('button');
+    t_page_select_first.setAttribute('class', 'table-page-select');
+    var t_page_select_second = document.createElement('button');
+    t_page_select_second.setAttribute('class', 'table-page-select');
+    var t_page_select_third = document.createElement('button');
+    t_page_select_third.setAttribute('class', 'table-page-select');
+    t_page_select_container.appendChild(t_page_select_first);
+    t_page_select_container.appendChild(t_page_select_second);
+    t_page_select_container.appendChild(t_page_select_third);
     t_bottom.appendChild(t_bottom_rpp);
-    t_bottom.appendChild(t_page_select);
-
+    t_bottom.appendChild(t_page_select_container);
     t_container.appendChild(t_top);
     t_container.appendChild(buildTable(t));
     t_container.appendChild(t_bottom);
-
     tables_container.appendChild(t_container);
+    if ((t.rows.length - 1) > t.size) {
+        updatePageSelect(t);
+    }
 }
 
 function updateTable(name) {
@@ -676,6 +735,7 @@ function updateTable(name) {
     table_container.removeChild(table);
     for (i = 0; i < tables.length; i++) {
         if (tables[i].name == name) {
+            updatePageSelect(tables[i]);		
             table_container.insertBefore(buildTable(tables[i]), table_container.children[1]);
             return;
         }
@@ -719,6 +779,16 @@ function removeRow(name, row) {
     for (i = 0; i < tables.length; i++) {
         if (tables[i].name == name) {
             tables[i].rmv_row(row);
+            updateTable(name);
+            return;
+        }
+    }
+}
+
+function changePage(name, page) {
+    for (i = 0; i < tables.length; i++) {
+        if (tables[i].name == name) {
+            tables[i].page = page;
             updateTable(name);
             return;
         }
@@ -886,10 +956,10 @@ ot.add_col('City');
 ot.add_col('Continent');
 ot.add_row([2022, 'winter', 'China', 'Beijing', 'Asia']);
 ot.add_row([2020, 'summer', 'Japan', 'Tokyo', 'Asia']);
-ot.add_row([2018, 'winter', 'Korea', 'Pyeongchang', 'Asia']);
-ot.add_row([2016,'summer','Brazil','Rio de Janeiro', 'South America']);
+ot.add_row([2018, 'winter', 'South Korea', 'Pyeongchang', 'Asia']);
+ot.add_row([2016, 'summer', 'Brazil', 'Rio de Janeiro', 'South America']);
 ot.add_row([2014, 'winter', 'Russia', 'Sochi', 'Europe']);
-ot.add_row([2012,'summer','United Kingdom','London', 'Europe']);
+ot.add_row([2012, 'summer', 'United Kingdom','London', 'Europe']);
 ot.add_row([2010, 'winter', 'Canada', 'Vancouver', 'North America']);
 ot.add_row([2008, 'summer', 'China', 'Beijing', 'Asia']);
 ot.add_row([2006, 'winter', 'Italy', 'Torino', 'Europe']);
@@ -898,6 +968,19 @@ ot.add_row([2002, 'winter', 'United States', 'Salt Lake City', 'North America'])
 ot.add_row([2000, 'summer', 'Australia', 'Sydney', 'Oceania']);
 ot.add_row([1998, 'winter', 'Japan', 'Nagano', 'Asia']);
 ot.add_row([1996, 'summer', 'United States', 'Atlanta', 'North America']);
+ot.add_row([1994, 'winter', 'Norway', 'Lillehammer', 'Europe']);
+ot.add_row([1992, 'summer', 'Spain', 'Barcelona', 'Europe']);
+ot.add_row([1992, 'winter', 'France', 'Albertville', 'Europe']);
+ot.add_row([1988, 'summer', 'South Korea', 'Seoul', 'Asia']);
+ot.add_row([1988, 'winter', 'Canada', 'Calgary', 'North America']);
+ot.add_row([1984, 'summer', 'United States', 'Los Angeles', 'North America']);
+ot.add_row([1984, 'winter', 'Yugoslavia', 'Sarajevo', 'Europe']);
+ot.add_row([1980, 'summer', 'Soviet Union', 'Moscow', 'Europe']);
+ot.add_row([1980, 'winter', 'United States', 'Lake Placid', 'North America']);
+ot.add_row([1976, 'summer', 'Canada', 'Montreal', 'North America']);
+ot.add_row([1976, 'winter', 'Austria', 'Innsbruck', 'Europe']);
+ot.add_row([1972, 'summer', 'West Germany', 'Munich', 'Europe']);
+ot.add_row([1972, 'winter', 'Japan', 'Tokyo', 'Asia']);
 
 var at = new Table('animals-table');
 at.add_col('Name');
@@ -913,4 +996,4 @@ at.add_row(['African Dwarf Frog', 'Amphibian', 'Carnivore', 'Aquatic']);
 at.add_row(['Sea Turtle', 'Reptile', 'Omnivorous', 'Aquatic']);
 
 addTable(ot);
-addTable(at);
+//addTable(at);
