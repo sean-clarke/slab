@@ -139,7 +139,7 @@ tbody {
     display: inline-block;
     vertical-align: top;
     background: linear-gradient(to right, var(--table-lt-color), var(--table-dk-color));
-    margin: 24px;
+    margin: 24px 12px 12px;
     border-radius: 24px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
 }
