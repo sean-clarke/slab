@@ -93,6 +93,7 @@ Right now I don't have anything set up, but if you want to contribute, send me a
 ## Everything else
 ### Contact me
 Email: sean.alexander.clarke@gmail.com
+
 Website: https://sean-clarke.github.io/
 ### Acknowledgments
 **Sean Clarke** - _Creator_
