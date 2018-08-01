@@ -13,7 +13,7 @@ An interactive datatable-based database management service for creating, editing
       * Visualize with various color schemes and layouts
       * Upload, edit, and save your data in several file formats
    3. [Tutorial](#slab-quick-tutorial)
-   4. [Commands](#javascript-console-commands)
+   4. [Console Controls](#javascript-console-controls)
    5. [Contributing](#contributing-to-slab)
    
    6. [Contact Me](#contact-me)
@@ -26,9 +26,10 @@ An interactive datatable-based database management service for creating, editing
 **Slab Datatable Manager** is free to use, I think. I haven't attached any license and it is a public repository, so feel free to use it. Though I assume no responsibility for how you use it, I would ask that you use it wholesomely and attempt to give back to the project either monetarily or intellectually, especially if you plan to use this commercially. You might have to ask me before you sell anything that uses it but I am not 100% sure, so let's just say I'd appreciate it if you do. Just open an issue.
 
 ### Try it out
+Because github is awesome and offers free project pages with GitHub Pages, you can try out Slab from the link at the top of the github repository. Mess around with the demo table, or feel free to delete the table and get started by uploading your own data by clicking on the large circled '+' on the left side of the application header. Have fun!
 
 ### Downloading and hosting on local machine
-As of writing this **Slab Datatable Manager** is not hosted for use anywhere and as such, you will need to download the code and run it from your own computer or server. Just download the master repo as a .zip file above, unzip into the folder you want to run it from and open up index.html with your preferred browser (as long as your preferred browser is Chrome or FireFox, because I haven't tested with anything else, feel free to try though). In some early builds I will have a demo table already rendered in the workspace. Feel free to play around with this table, or just delete it (the white/red 'X' at the top-right of the table). Now you can either build a table from scratch or upload data for editing and visualization purposes by clicking on the big circled '+' at the left of the page header. I am only aiming to add support for uploading _.json_, _.csv_. and _.xlsx_ files, however, I have currently only integrated .csv and if you want anything else, you may have to ask me (create an issue) and wait or add the feature yourself.
+Currently the most secure way to utilize Slab Datatable Manager is to download the code and run it from your own computer or private server. Just download the master repo as a .zip file above, unzip into the folder you want to run it from and open up index.html with your preferred browser (as long as your preferred browser is Chrome or FireFox, because I haven't tested with anything else, feel free to try though). In some early builds I will have a demo table already rendered in the workspace. Feel free to play around with this table, or just delete it (the white/red 'X' at the top-right of the table). Now you can either build a table from scratch or upload data for editing and visualization purposes by clicking on the big circled '+' at the left of the page header. I am only aiming to add support for uploading _.json_, _.csv_. and _.xlsx_ files, however, I have currently only integrated .csv and if you want anything else, you may have to ask me (create an issue) and wait or add the feature yourself.
 
 ## What can I do in Slab?
 You can do a lot in Slab! Here are some of its features:
