@@ -42,6 +42,43 @@ You can do a lot in Slab! Here are some of its features:
 ![Screenshot](https://raw.github.com/Sean-Clarke/website-dbms/screenshots/loadpreview.png?raw=true "Easy editing functionality")
 ## Slab quick tutorial
 Coming Soon...
+## JavaScript Console Controls
+### Create New Table
+```js
+t = new Table('table-name');
+```
+### Editing Table
+```js
+// Add Column
+t.add_col('header-name', 'default cell value');
+
+// Add Row
+t.add_row({'C0':'0', 'C1':'1', 'C2':'2'}); // Takes ['header-value':'new cell value'] mapped key-value loaded object, additonal keyword arguments 'index'=-1 and 'replace'=false are used for reorganizing and editing cells
+
+// Remove Column
+t.rmv_col('header-name');
+
+// Remove Row
+t.rmv_row(row_index);
+
+// Sort
+t.sort('header-name');
+
+// Add Filter
+t.add_filter('filter-string');
+```
+### Representing Table in Workspace (Browser DOM)
+```js
+// Add table to workspace
+addTable(t);
+
+// Remove table from workspace
+removeTable('table-name')
+
+// Rerenders table, adding changes made by console commands to table with name == 'table-name'
+updateTable('table-name');
+```
+
 ## Contributing to slab
 Hey! It is great that you are interested in contributing. Here is how you can do it:
 ### Code
