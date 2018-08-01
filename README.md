@@ -1,7 +1,6 @@
 # Slab Datatable Manager
 An interactive datatable-based dbms website for creating, loading, editing, and saving data.
 
-
 ![Screenshot](https://raw.github.com/Sean-Clarke/website-dbms/screenshots/tablebuilding.png?raw=true "Easy editing functionality")
 
 ## How do I start using Slab?
