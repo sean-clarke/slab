@@ -53,7 +53,7 @@ t = new Table('table-name');
 t.add_col('header-name', 'default cell value');
 
 // Add Row
-t.add_row({'C0':'0', 'C1':'1', 'C2':'2'}); // Takes ['header-value':'new cell value'] mapped key-value loaded object, additonal keyword arguments 'index'=-1 and 'replace'=false are used for reorganizing and editing cells
+t.add_row(['list', 'of', 'cells']); // Takes a list of strings representing new cell value at the respective header index column, additonal keyword arguments 'index'=-1 and 'replace'=false are used for reorganizing and editing cells
 
 // Remove Column
 t.rmv_col('header-name');
