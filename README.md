@@ -1,8 +1,10 @@
 # Slab Datatable Manager
-An interactive datatable-based dbms website for creating, loading, editing, and saving data.
-
+An interactive datatable-based database management service for creating, editing, and saving tables.
+## 
+ 
 ![Screenshot](https://raw.github.com/Sean-Clarke/website-dbms/screenshots/titless.png?raw=true "Easy to use, beautiful table management")
-
+ 
+## 
 ## How do I start using Slab?
 ### Quick Note
 **Slab Datatable Manager** is free to use, I think. I haven't attached any license and it is a public repository, so feel free to use it. Though I assume no responsibility for how you use it, I would ask that you use it wholesomely and attempt to give back to the project either monetarily or intellectually, especially if you plan to use this commercially. You might have to ask me before you sell anything that uses it but I am not 100% sure, so let's just say I'd appreciate it if you do. Just open an issue.
