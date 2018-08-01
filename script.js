@@ -321,42 +321,42 @@ function displayColors(o) {
     var color_selection_sky = document.createElement('button');
     color_selection_sky.setAttribute('id', name.concat('-controls-color-button-sky'));
     color_selection_sky.setAttribute('class', 'table-controls-color-button');
-    color_selection_sky.setAttribute('onclick', 'changeColors("sky");');
+    color_selection_sky.setAttribute('onclick', 'changeColors("'.concat(name.concat('", "sky");')));
     color_selection_sky.style.background = 'linear-gradient(to right, #3399DD, #1177DD)';
     var color_selection_sea = document.createElement('button');
     color_selection_sea.setAttribute('id', name.concat('-controls-color-button-sea'));
     color_selection_sea.setAttribute('class', 'table-controls-color-button');
-    color_selection_sea.setAttribute('onclick', 'changeColors("sea");');
+    color_selection_sea.setAttribute('onclick', 'changeColors("'.concat(name.concat('", "sea");')));
     color_selection_sea.style.background = 'linear-gradient(to right, #00BBA0, #00ABC0)';
     var color_selection_jungle = document.createElement('button');
     color_selection_jungle.setAttribute('id', name.concat('-controls-color-button-jungle'));
     color_selection_jungle.setAttribute('class', 'table-controls-color-button');
-    color_selection_jungle.setAttribute('onclick', 'changeColors("jungle");');
+    color_selection_jungle.setAttribute('onclick', 'changeColors("'.concat(name.concat('", "jungle");')));
     color_selection_jungle.style.background = 'linear-gradient(to right, #77BB77, #448844)';
     var color_selection_ocean = document.createElement('button');
     color_selection_ocean.setAttribute('id', name.concat('-controls-color-button-ocean'));
     color_selection_ocean.setAttribute('class', 'table-controls-color-button');
-    color_selection_ocean.setAttribute('onclick', 'changeColors("ocean");');
+    color_selection_ocean.setAttribute('onclick', 'changeColors("'.concat(name.concat('", "ocean");')));
     color_selection_ocean.style.background = 'linear-gradient(to right, #1060A0, #005070)';
     var color_selection_sunset = document.createElement('button');
     color_selection_sunset.setAttribute('id', name.concat('-controls-color-button-sunset'));
     color_selection_sunset.setAttribute('class', 'table-controls-color-button');
-    color_selection_sunset.setAttribute('onclick', 'changeColors("sunset");');
+    color_selection_sunset.setAttribute('onclick', 'changeColors("'.concat(name.concat('", "sunset");')));
     color_selection_sunset.style.background = 'linear-gradient(to right, #FF5540, #EE3340)';
     var color_selection_berry = document.createElement('button');
     color_selection_berry.setAttribute('id', name.concat('-controls-color-button-berry'));
     color_selection_berry.setAttribute('class', 'table-controls-color-button');
-    color_selection_berry.setAttribute('onclick', 'changeColors("berry");');
+    color_selection_berry.setAttribute('onclick', 'changeColors("'.concat(name.concat('", "berry");')));
     color_selection_berry.style.background = 'linear-gradient(to right, #CC2288, #441188)';
     var color_selection_night = document.createElement('button');
     color_selection_night.setAttribute('class', 'table-controls-color-button');
-    color_selection_night.setAttribute('onclick', 'changeColors("night");');
+    color_selection_night.setAttribute('onclick', 'changeColors("'.concat(name.concat('", "night");')));
     color_selection_night.style.background = 'linear-gradient(to right, #445566, #223344)';
     var color_selection_marble = document.createElement('button');
     color_selection_night.setAttribute('id', name.concat('-controls-color-button-night'));
     color_selection_marble.setAttribute('id', name.concat('-controls-color-button-marble'));
     color_selection_marble.setAttribute('class', 'table-controls-color-button');
-    color_selection_marble.setAttribute('onclick', 'changeColors("marble");');
+    color_selection_marble.setAttribute('onclick', 'changeColors("'.concat(name.concat('", "marble");')));
     color_selection_marble.style.background = 'linear-gradient(to right, white, #DDDDDD)';
     color_selection.appendChild(color_selection_sky);
     color_selection.appendChild(color_selection_sea);
@@ -377,9 +377,9 @@ function hideColors() {
     }
 }
 
-function changeColors(str) {
+function changeColors(name, str) {
     // set col palletes:    lt       dk      aux-pri    aux-sec    sec-lt     sec-dk
-    var cpal_marble = ['#E9E9E9', '#D5D5D5', '#EFEFEF', 'white', '#D9D9D9', '#C5C5C5'];
+    var cpal_marble = ['#E0E0E0', '#C9C9C9', '#EFEFEF', 'white', '#D9D9D9', '#C5C5C5'];
     var cpal_sunset = ['#FF5540', '#EE3340', '#F09030', '#F0A030', '#FF7060', '#EE5050'];
     var cpal_berry = ['#BB2288', '#441188', '#CC20CC', '#DD30DD', '#CC4499', '#4433AA'];
     var cpal_sky = ['#3399DD', '#1177DD', '#0575C5', '#0065C0', '#44AAFF', '#2288EE'];
@@ -387,7 +387,7 @@ function changeColors(str) {
     var cpal_sea = ['#00BBA0', '#00ABC0', '#009BA0', '#009090', '#22D0BB', '#00BBEE'];
     var cpal_jungle = ['#66BB66', '#448844', '#228822', '#117711', '#88CC88', '#509950'];
     var cpal_night = ['#445566', '#223344', '#7090B0', '#80A0C0', '#607585', '#324354'];
-    document.documentElement.style.setProperty('--table-text-color', 'white');
+    document.documentElement.style.setProperty('--'.concat(name.concat('-text-color')), 'white');
     switch(str) {
         case 'night':
             c_pal = cpal_night;
@@ -412,15 +412,15 @@ function changeColors(str) {
             break;
         case 'marble':
             c_pal = cpal_marble;
-            document.documentElement.style.setProperty('--table-text-color', '#555555');
+            document.documentElement.style.setProperty('--'.concat(name.concat('-text-color')), '#555555');
             break;
     }
-    document.documentElement.style.setProperty('--table-lt-color', c_pal[0]);
-    document.documentElement.style.setProperty('--table-dk-color', c_pal[1]);
-    document.documentElement.style.setProperty('--table-aux-pri-color', c_pal[2]);
-    document.documentElement.style.setProperty('--table-aux-sec-color', c_pal[3]);
-    document.documentElement.style.setProperty('--table-sec-lt-color', c_pal[4]);
-    document.documentElement.style.setProperty('--table-sec-dk-color', c_pal[5]);
+    document.documentElement.style.setProperty('--'.concat(name.concat('-lt-color')), c_pal[0]);
+    document.documentElement.style.setProperty('--'.concat(name.concat('-dk-color')), c_pal[1]);
+    document.documentElement.style.setProperty('--'.concat(name.concat('-aux-pri-color')), c_pal[2]);
+    document.documentElement.style.setProperty('--'.concat(name.concat('-aux-sec-color')), c_pal[3]);
+    document.documentElement.style.setProperty('--'.concat(name.concat('-sec-lt-color')), c_pal[4]);
+    document.documentElement.style.setProperty('--'.concat(name.concat('-sec-dk-color')), c_pal[5]);
 }
 
 function displayLayouts(o) {
@@ -462,30 +462,37 @@ function displayRowsPerPage(name) {
     rpp_selection_5.setAttribute('class', 'table-bottom-rpp-option');
     rpp_selection_5.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "5"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_5.innerHTML = '5';
+    rpp_selection_5.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     var rpp_selection_10 = document.createElement('button');
     rpp_selection_10.setAttribute('class', 'table-bottom-rpp-option');
     rpp_selection_10.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "10"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_10.innerHTML = '10';
+    rpp_selection_10.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     var rpp_selection_25 = document.createElement('button');
     rpp_selection_25.setAttribute('class', 'table-bottom-rpp-option');
     rpp_selection_25.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "25"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_25.innerHTML = '25';
+    rpp_selection_25.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     var rpp_selection_50 = document.createElement('button');
     rpp_selection_50.setAttribute('class', 'table-bottom-rpp-option');
     rpp_selection_50.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "50"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_50.innerHTML = '50';
+    rpp_selection_50.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     var rpp_selection_100 = document.createElement('button');
     rpp_selection_100.setAttribute('class', 'table-bottom-rpp-option');
     rpp_selection_100.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "100"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_100.innerHTML = '100';
+    rpp_selection_100.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     var rpp_selection_500 = document.createElement('button');
     rpp_selection_500.setAttribute('class', 'table-bottom-rpp-option');
     rpp_selection_500.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "500"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_500.innerHTML = '500';
+    rpp_selection_500.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     var rpp_selection_2000 = document.createElement('button');
     rpp_selection_2000.setAttribute('class', 'table-bottom-rpp-option');
     rpp_selection_2000.setAttribute('onclick', 'changeRPP("'.concat(name).concat('", "2000"); hideRowsPerPage("'.concat(name).concat('");')));
     rpp_selection_2000.innerHTML = '2000';
+    rpp_selection_2000.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     rpp_container.appendChild(rpp_selection_5);
     rpp_container.appendChild(rpp_selection_10);
     rpp_container.appendChild(rpp_selection_25);
@@ -601,6 +608,7 @@ function buildTable(t) {
     //}
     var td_html = document.createElement('td');
     td_html.setAttribute('class', 'table-new-row-button-container');
+    td_html.style.borderTop = 'thin solid var(--'.concat(name.concat('-aux-pri-color)'));
     td_html.setAttribute('colspan', t.cols + 1);
     var t_nr_button = document.createElement('button');
     t_nr_button.setAttribute('id', name.concat('-new-row-button'));
@@ -626,6 +634,7 @@ function buildTable(t) {
             cell = t.rows[0][cell];
             var td_html = document.createElement('td');
             td_html.setAttribute('class', 'table-data');
+            td_html.style.borderTop = 'thin solid var(--'.concat(name.concat('-aux-pri-color)'));
             var tc_html = document.createElement('div');
             tc_html.setAttribute('id', name.concat('-cell-').concat(i.toString()).concat('-').concat(cell.toString().toLowerCase()));
             tc_html.setAttribute('class', 'table-cell');
@@ -635,6 +644,7 @@ function buildTable(t) {
         }
         var tr_actions_html = document.createElement('td');
         tr_actions_html.setAttribute('class', 'table-row-actions');
+        tr_actions_html.style.borderTop = 'thin solid var(--'.concat(name.concat('-aux-pri-color)'));
         var tr_actions_button_html = document.createElement('button');
         tr_actions_button_html.setAttribute('id', name.concat('-row-').concat(i.toString()).concat('-actions-button'));
         tr_actions_button_html.setAttribute('class', 'table-row-actions-button');
@@ -654,6 +664,16 @@ function addTable(t) {
     var t_container = document.createElement('div');
     t_container.setAttribute('id', name.concat('-container'));
     t_container.setAttribute('class', 'table-container');
+    document.documentElement.style.setProperty('--'.concat(name.concat('-lt-color')), '#445566');
+    document.documentElement.style.setProperty('--'.concat(name.concat('-dk-color')), '#223344');
+    document.documentElement.style.setProperty('--'.concat(name.concat('-aux-pri-color')), '#7090B0');
+    document.documentElement.style.setProperty('--'.concat(name.concat('-aux-sec-color')), '#80A0C0');
+    document.documentElement.style.setProperty('--'.concat(name.concat('-sec-lt-color')), '#607585');
+    document.documentElement.style.setProperty('--'.concat(name.concat('-sec-dk-color')), '#324354');
+    document.documentElement.style.setProperty('--'.concat(name.concat('-text-color')), 'white');
+    t_container.style.color = 'var(--'.concat(name.concat('-text-color)'));
+    t_container.style.background = 'linear-gradient(to right, var(--'.concat(name.concat('-lt-color), var(--'.concat(name.concat('-dk-color))'))));
+    
     // Create Table Top
     var t_top = document.createElement('div');
     t_top.setAttribute("id", name.concat('-controls'));
@@ -710,10 +730,13 @@ function addTable(t) {
     t_page_select_container.style.display = 'none';
     var t_page_select_first = document.createElement('button');
     t_page_select_first.setAttribute('class', 'table-page-select');
+    t_page_select_first.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     var t_page_select_second = document.createElement('button');
     t_page_select_second.setAttribute('class', 'table-page-select');
+    t_page_select_second.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     var t_page_select_third = document.createElement('button');
     t_page_select_third.setAttribute('class', 'table-page-select');
+    t_page_select_third.style.color = 'thin solid var(--'.concat(name.concat('-text-color)'));
     t_page_select_container.appendChild(t_page_select_first);
     t_page_select_container.appendChild(t_page_select_second);
     t_page_select_container.appendChild(t_page_select_third);
@@ -807,6 +830,7 @@ function newRowEdit(name) {
             trow.setAttribute('id', name.concat('-new-tr'));
             for (var hdr in tables[i].rows[0]) {
                 tdata = document.createElement('td');
+                tdata.style.borderTop = 'thin solid var(--'.concat(name.concat('-aux-pri-color)'));
                 tcell = document.createElement('div');
                 //tcell = document.createElement('div');
                 //tcell.setAttribute('id', name.concat('-cell-').concat(tables[i].rows.length.toString()).concat('-').concat(tables[i].rows[0][hdr].toString().toLowerCase()));
@@ -817,6 +841,7 @@ function newRowEdit(name) {
                 trow.appendChild(tdata);
             }
             tdata = document.createElement('td');
+            tdata.style.borderTop = 'thin solid var(--'.concat(name.concat('-aux-pri-color)'));
             tcell = document.createElement('div');
             tdata.appendChild(tcell);
             trow.appendChild(tdata);
@@ -877,6 +902,9 @@ function editMode(name) {
     var headers = head.getElementsByClassName('table-th');
     var headercs = head.getElementsByClassName('table-thc');
     var update = false;
+    if (headers.length == 0) {
+        update = true;
+    } 
     for (i = 0; i < headers.length; i++) {
         headers[i].classList.toggle('th-editing');
         headercs[i].classList.toggle('thc-editing');
@@ -905,7 +933,6 @@ function editMode(name) {
     if (update == true) {
         for (i = 0; i < tables.length; i++) {
             if (tables[i].name == name) {
-                //tables[i].rows = [{}];
                 for (hi = 0; hi < headercs.length; hi++) {
                     for (thi = 0; thi < hi; thi++) {
                         if (headercs[hi].textContent == tables[i].rows[0][thi]) {
@@ -995,5 +1022,8 @@ at.add_row(['Grizzly Bear', 'Mammal', 'Omnivore', 'Terrestrial']);
 at.add_row(['African Dwarf Frog', 'Amphibian', 'Carnivore', 'Aquatic']);
 at.add_row(['Sea Turtle', 'Reptile', 'Omnivorous', 'Aquatic']);
 
+var et = new Table('empty-table');
+
 addTable(ot);
 //addTable(at);
+//addTable(et);
