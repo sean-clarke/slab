@@ -37,7 +37,7 @@ You can do a lot in Slab! Here are some of its features:
 #### Easy-to-use table editor
 ![Screenshot](https://raw.github.com/Sean-Clarke/website-dbms/screenshots/editor.png?raw=true "Easy editing functionality")
 #### Maintain, edit, and visualize as many tables as your computer can handle
-![Screenshot](https://raw.github.com/Sean-Clarke/website-dbms/screenshots/multitables.png?raw=true "Multiple tables support")
+![Screenshot](https://raw.github.com/Sean-Clarke/website-dbms/screenshots/multicolors.png?raw=true "Multiple tables support")
 #### Visualize your tables in multiple colors and layouts
 ![Screenshot](https://raw.github.com/Sean-Clarke/website-dbms/screenshots/altrowlayout.png?raw=true "Alternating rows layout")
 #### Build and refine your tables right in the browser
