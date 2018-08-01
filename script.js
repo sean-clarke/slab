@@ -27,7 +27,7 @@ function Table(name) {
     this.add_row = function (v, index=-1, replace=false) {
         nr = {};
         for (var hdr in this.rows[0]) {
-        nr[this.rows[0][hdr]] = v[hdr];
+            nr[this.rows[0][hdr]] = v[hdr];
         }
         if (index == -1) {
             this.rows.push(nr);
@@ -522,7 +522,7 @@ function updatePageSelect(t) {
     var pages = Math.ceil((t.rows.length - 1) / t.size);
     if (pages > 1) {
         page_select_container.style.display = 'inline-block';
-        if ((t.page < 2) || ((t.page == 2) && (pages = 3))) {
+        if ((t.page < 2) || ((t.page == 2) && (pages == 3))) {
             for (p = 0; p < 3; p++) {
                 if (p >= pages) {
                     page_select_container.childNodes[p].style.display = 'none';
@@ -539,27 +539,40 @@ function updatePageSelect(t) {
                     page_select_container.childNodes[p].setAttribute('onclick', 'changePage("'.concat(t.name).concat('", ').concat(p.toString()).concat(');'));
                 }
             }
-        } else if (t.page == pages) {
+        } else if (t.page == pages - 1) {
             for (p = t.page - 2; p <= t.page; p++) {
-                page_select_container.childNodes[p].style.display = 'inline-block';
-                page_select_container.childNodes[p].innerHTML = p;
+                page_select_container.childNodes[p - t.page + 2].style.display = 'inline-block';
+                page_select_container.childNodes[p - t.page + 2].innerHTML = p;
                 if (p == t.page) {
-                    page_select_container.childNodes[p].className = 'table-current-page-select';
-                    page_select_container.childNodes[p].disabled = true;
+                    page_select_container.childNodes[p - t.page + 2].className = 'table-current-page-select';
+                    page_select_container.childNodes[p - t.page + 2].disabled = true;
                 } else {
-                    page_select_container.childNodes[p].className = 'table-page-select';
-                    page_select_container.childNodes[p].disabled = false;
-                    page_select_container.childNodes[p].setAttribute('onclick', 'changePage("'.concat(t.name).concat('", ').concat(p.toString()).concat(');'));
+                    page_select_container.childNodes[p - t.page + 2].className = 'table-page-select';
+                    page_select_container.childNodes[p - t.page + 2].disabled = false;
+                    page_select_container.childNodes[p - t.page + 2].setAttribute('onclick', 'changePage("'.concat(t.name).concat('", ').concat(p.toString()).concat(');'));
                 }
             }
         } else {
-            for (p = t.page - 2; ((p <= pages) || (p <= (t.page + 2))); p++) {
+            var pi = -1;
+            for (p = t.page - 1; ((p < pages && p <= (t.page + 1))); p++) {
+                pi += 1;
+                page_select_container.childNodes[pi].style.display = 'inline-block';
+                page_select_container.childNodes[pi].innerHTML = p;
+                if (p == t.page) {
+                    page_select_container.childNodes[pi].className = 'table-current-page-select';
+                    page_select_container.childNodes[pi].disabled = true;
+                } else {
+                    page_select_container.childNodes[pi].className = 'table-page-select';
+                    page_select_container.childNodes[pi].disabled = false;
+                    page_select_container.childNodes[pi].setAttribute('onclick', 'changePage("'.concat(t.name).concat('", ').concat(p.toString()).concat(');'));
+                }
             }
         }
     } else {
-        for (psi = 0; psi < page_select_container.childNodes.length; psi++) {
-            page_select_container.childNodes[psi].style.display = 'none';
-        }
+        //for (psi = 0; psi < page_select_container.childNodes.length; psi++) {
+        //    page_select_container.childNodes[psi].style.display = 'none';
+        //}
+        page_select_container.style.display = 'none';
     }
 }
 
@@ -802,6 +815,9 @@ function removeRow(name, row) {
     for (i = 0; i < tables.length; i++) {
         if (tables[i].name == name) {
             tables[i].rmv_row(row);
+            if (Math.ceil((tables[i].rows.length - 1) / tables[i].size) < tables[i].page + 1 && tables[i].page != 0) {
+                tables[i].page -= 1;
+            }	
             updateTable(name);
             return;
         }
@@ -1024,6 +1040,6 @@ at.add_row(['Sea Turtle', 'Reptile', 'Omnivorous', 'Aquatic']);
 
 var et = new Table('empty-table');
 
-addTable(ot);
+//addTable(ot);
 //addTable(at);
 //addTable(et);
