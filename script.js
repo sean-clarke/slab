@@ -106,7 +106,7 @@ function newTablePopup() {
     var popup_file_notice = document.createElement('p');
     popup_file_notice.id = 'nt-popup-load-notice';
     popup_file_notice.className = 'nt-popup-body-p';
-    popup_file_notice.innerHTML = 'Note: Currently supported file types to load from are limited to .json .csv and .xlsx';
+    popup_file_notice.innerHTML = 'Note: Currently supported file types to load from are limited to .json and .csv';
     var popup_file_input_label = document.createElement('label');
     popup_file_input_label.id = 'nt-popup-file-label';
     popup_file_input_label.setAttribute ('for', 'nt-popup-file');
@@ -114,7 +114,7 @@ function newTablePopup() {
     var popup_file_input = document.createElement('input');
     popup_file_input.id = 'nt-popup-file';
     popup_file_input.type = 'file';
-    popup_file_input.accept = '.json,.csv,.xlsx';
+    popup_file_input.accept = '.json,.csv';
     popup_file_input.addEventListener('change', function(e) {
         popup_radio_empty.disabled = true;
         var popup_load_loader = document.createElement('div');
