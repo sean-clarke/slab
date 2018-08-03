@@ -214,6 +214,7 @@ tbody {
     border: 2px solid white;
     border-radius: 24px;
     border-top-right-radius: 0px;
+    z-index: 2;
 }
 
 .table-controls-color-tab:hover {
